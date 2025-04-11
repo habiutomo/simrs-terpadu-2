@@ -12,7 +12,16 @@
   }
 
   .sidebar-link.active {
-    @apply text-white border-l-4 border-white bg-[#172a46];
+    @apply text-white border-l-4 border-white bg-[#172a46] font-medium;
+  }
+  
+  /* Animasi saat hover pada menu sidebar */
+  .sidebar-menu-item {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .sidebar-menu-item:hover {
+    @apply translate-x-1;
   }
 
   @media (max-width: 768px) {

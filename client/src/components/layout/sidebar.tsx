@@ -80,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                       >
                         <div className="flex items-center">
                           <span className="material-icons text-sm mr-3">{link.icon}</span>
-                          <span>{link.label}</span>
+                          <span className="font-medium tracking-wide">{link.label}</span>
                         </div>
                         <span className="material-icons text-xs">
                           {isExpanded ? "expand_less" : "expand_more"}
@@ -93,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                             <li key={childItem.href}>
                               <Link href={childItem.href}>
                                 <a 
-                                  className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] ${
+                                  className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] sidebar-menu-item ${
                                     isMenuActive(childItem.href) ? "text-white font-medium" : ""
                                   }`}
                                   onClick={() => {
@@ -103,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                                   }}
                                 >
                                   <span className="material-icons text-xs mr-3">{childItem.icon}</span>
-                                  <span className="text-sm">{childItem.label}</span>
+                                  <span className="text-sm font-medium">{childItem.label}</span>
                                 </a>
                               </Link>
                             </li>
@@ -114,7 +114,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                   ) : (
                     <Link href={link.href}>
                       <a 
-                        className={`flex items-center px-4 py-3 hover:bg-[#172a46] text-gray-300 ${
+                        className={`flex items-center px-4 py-3 hover:bg-[#172a46] text-gray-300 sidebar-menu-item ${
                           isMenuActive(link.href) ? "sidebar-link active" : ""
                         }`}
                         onClick={() => {
@@ -124,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                         }}
                       >
                         <span className="material-icons text-sm mr-3">{link.icon}</span>
-                        <span>{link.label}</span>
+                        <span className="font-medium tracking-wide">{link.label}</span>
                       </a>
                     </Link>
                   )}
@@ -143,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                   location === "/settings" ? "text-white" : ""
                 }`}>
                   <span className="material-icons text-sm mr-3">settings</span>
-                  <span>Pengaturan</span>
+                  <span className="font-medium tracking-wide">Pengaturan</span>
                 </a>
               </Link>
             </li>
@@ -153,7 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                   location === "/bantuan" ? "text-white" : ""
                 }`}>
                   <span className="material-icons text-sm mr-3">help</span>
-                  <span>Bantuan</span>
+                  <span className="font-medium tracking-wide">Bantuan</span>
                 </a>
               </Link>
             </li>
