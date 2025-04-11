@@ -9,7 +9,7 @@ import {
   Stethoscope,
   Hotel,
   Pills,
-  Flask,
+  TestTubes,
   Radio,
   BarChart2,
   Settings,
@@ -70,7 +70,7 @@ const Sidebar = () => {
             <Pills size={20} /> Farmasi
           </Link>
           <Link href="/laboratory" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
-            <Flask size={20} /> Laboratorium
+            <TestTubes size={20} /> Laboratorium
           </Link>
           <Link href="/radiology" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
             <Radio size={20} /> Radiologi
