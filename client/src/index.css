@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-neutral-100 text-foreground;
+  }
+
+  .sidebar-link.active {
+    @apply bg-primary bg-opacity-10 text-primary border-l-4 border-primary;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      @apply transform -translate-x-full transition-transform duration-300;
+    }
+    .sidebar.open {
+      @apply translate-x-0;
+    }
+  }
+}
