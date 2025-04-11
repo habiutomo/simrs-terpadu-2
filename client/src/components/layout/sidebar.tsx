@@ -1,185 +1,95 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "wouter";
-import { NAV_LINKS, USER_DATA } from "@/lib/constants";
+import React from "react";
+import { cn } from "@/lib/utils";
+import { Link } from "wouter";
+import { 
+  Home,
+  Users,
+  Calendar,
+  FileText,
+  Stethoscope,
+  Hotel,
+  Pills,
+  Flask,
+  Radio,
+  BarChart2,
+  Settings,
+  HelpCircle,
+  LogOut,
+  ChevronDown
+} from "lucide-react";
 
-interface SidebarProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
-  const [location] = useLocation();
-  const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
-  
-  const toggleMenu = (path: string) => {
-    if (expandedMenus.includes(path)) {
-      setExpandedMenus(expandedMenus.filter(item => item !== path));
-    } else {
-      setExpandedMenus([...expandedMenus, path]);
-    }
-  };
-  
-  const isMenuActive = (href: string): boolean => {
-    return location === href || (href !== "/" && location.startsWith(href));
-  };
-  
-  const isParentActive = (parent: string): boolean => {
-    return NAV_LINKS.some(link => 
-      link.parent === parent && isMenuActive(link.href)
-    );
-  };
-  
-  const shouldExpandMenu = (href: string): boolean => {
-    return expandedMenus.includes(href) || isParentActive(href);
-  };
-  
-  // Group menu items by parent
-  const mainLinks = NAV_LINKS.filter(link => !link.isSubmenu);
-  
+const Sidebar = () => {
   return (
-    <aside 
-      className={`w-64 bg-[#111827] text-white fixed h-full z-10 md:relative transition-transform duration-300 ${
-        open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-      }`}
-    >
-      <div className="flex flex-col h-full">
-        {/* Logo */}
-        <div className="p-4 border-b border-gray-800">
-          <div className="flex items-center">
-            <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">RS</span>
+    <aside className="fixed left-0 top-0 z-40 h-screen w-60 bg-[#0A1A2C] text-white">
+      <div className="flex h-16 items-center gap-2 border-b border-white/10 px-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-[#0A1A2C] font-bold">
+            RS
+          </div>
+          <span className="font-semibold">SIMRS Terpadu</span>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 p-4">
+        <div className="mb-4">
+          <div className="flex items-center gap-2 rounded-lg p-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white/10">
+              A
             </div>
-            <div className="ml-3">
-              <h1 className="text-lg font-medium text-white">SIMRS Terpadu</h1>
+            <div className="flex flex-col">
+              <span className="text-sm">Administrator</span>
+              <span className="text-xs text-white/60">RSUD Harapan Bunda</span>
             </div>
           </div>
         </div>
-        
-        {/* User Info */}
-        <div className="px-4 py-3 border-b border-gray-800">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
-              <span className="font-medium">A</span>
-            </div>
-            <div className="ml-3">
-              <p className="text-white text-sm font-medium">Administrator</p>
-              <p className="text-gray-400 text-xs">RSUD Harapan Bunda</p>
-            </div>
+
+        <nav className="space-y-1">
+          <Link href="/dashboard" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Home size={20} /> Dashboard
+          </Link>
+          <div>
+            <button className="flex w-full items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+              <Users size={20} /> 
+              <span className="flex-1 text-left">Pasien</span>
+              <ChevronDown size={16} />
+            </button>
           </div>
-        </div>
-        
-        {/* Navigation Links */}
-        <nav className="flex-1 overflow-y-auto py-3">
-          <ul className="space-y-1 px-2">
-            {mainLinks.map((link) => {
-              // Find any child menus
-              const childMenus = NAV_LINKS.filter(item => item.parent === link.href.substring(1));
-              const hasChildren = childMenus.length > 0;
-              const isExpanded = shouldExpandMenu(link.href.substring(1));
-              
-              return (
-                <li key={link.href}>
-                  {hasChildren ? (
-                    <div>
-                      <button
-                        className={`w-full flex items-center justify-between px-3 py-2 text-white rounded-md ${
-                          (isMenuActive(link.href) || isParentActive(link.href.substring(1))) 
-                            ? "bg-gray-700" 
-                            : "hover:bg-gray-700"
-                        }`}
-                        onClick={() => toggleMenu(link.href.substring(1))}
-                      >
-                        <div className="flex items-center">
-                          <span className="material-icons text-lg mr-3">{link.icon}</span>
-                          <span className="font-medium">{link.label}</span>
-                        </div>
-                        {hasChildren && (
-                          <span className="material-icons text-sm">
-                            {isExpanded ? "expand_less" : "expand_more"}
-                          </span>
-                        )}
-                      </button>
-                      
-                      {isExpanded && (
-                        <ul className="mt-1 pl-8 space-y-1">
-                          {childMenus.map(childItem => (
-                            <li key={childItem.href}>
-                              <div onClick={() => {
-                                if (window.innerWidth < 768) {
-                                  setOpen(false);
-                                }
-                              }}>
-                                <Link href={childItem.href}>
-                                  <div 
-                                    className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
-                                      isMenuActive(childItem.href) ? "bg-gray-700" : "hover:bg-gray-700"
-                                    }`}
-                                  >
-                                    <span className="material-icons text-sm mr-3">{childItem.icon}</span>
-                                    <span className="text-sm">{childItem.label}</span>
-                                  </div>
-                                </Link>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ) : (
-                    <div onClick={() => {
-                      if (window.innerWidth < 768) {
-                        setOpen(false);
-                      }
-                    }}>
-                      <Link href={link.href}>
-                        <div 
-                          className={`flex items-center px-3 py-2 rounded-md cursor-pointer ${
-                            isMenuActive(link.href) ? "bg-gray-700" : "hover:bg-gray-700"
-                          }`}
-                        >
-                          <span className="material-icons text-lg mr-3">{link.icon}</span>
-                          <span className="font-medium">{link.label}</span>
-                        </div>
-                      </Link>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+          <Link href="/appointments" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Calendar size={20} /> Jadwal & Appointment
+          </Link>
+          <Link href="/medical-records" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <FileText size={20} /> Rekam Medis
+          </Link>
+          <Link href="/outpatient" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Stethoscope size={20} /> Rawat Jalan
+          </Link>
+          <Link href="/inpatient" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Hotel size={20} /> Rawat Inap
+          </Link>
+          <Link href="/pharmacy" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Pills size={20} /> Farmasi
+          </Link>
+          <Link href="/laboratory" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Flask size={20} /> Laboratorium
+          </Link>
+          <Link href="/radiology" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Radio size={20} /> Radiologi
+          </Link>
+          <Link href="/reports" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <BarChart2 size={20} /> Laporan
+          </Link>
+          <Link href="/settings" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <Settings size={20} /> Pengaturan
+          </Link>
         </nav>
-        
-        {/* Border Line */}
-        <div className="mx-3 border-t border-gray-700 my-2"></div>
-        
-        {/* Settings & Help */}
-        <div className="px-2 pb-4">
-          <ul className="space-y-1">
-            <li>
-              <div>
-                <Link href="/bantuan">
-                  <div className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
-                    location === "/bantuan" ? "bg-gray-700" : "hover:bg-gray-700"
-                  }`}>
-                    <span className="material-icons text-lg mr-3">help_outline</span>
-                    <span className="font-medium">Bantuan</span>
-                  </div>
-                </Link>
-              </div>
-            </li>
-            <li>
-              <div>
-                <Link href="/logout">
-                  <div className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
-                    location === "/logout" ? "bg-gray-700" : "hover:bg-gray-700"
-                  }`}>
-                    <span className="material-icons text-lg mr-3">logout</span>
-                    <span className="font-medium">Keluar</span>
-                  </div>
-                </Link>
-              </div>
-            </li>
-          </ul>
+
+        <div className="mt-auto space-y-1">
+          <Link href="/help" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
+            <HelpCircle size={20} /> Bantuan
+          </Link>
+          <button className="flex w-full items-center gap-2 rounded-lg p-2 text-left hover:bg-white/10">
+            <LogOut size={20} /> Keluar
+          </button>
         </div>
       </div>
     </aside>
