@@ -370,22 +370,29 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getSatuSehatSyncStats(): Promise<Record<string, { total: number, synced: number }>> {
-    // This is a more complex query that needs to be broken down:
-    const results = await db.execute(sql`
-      SELECT 
-        entity_type,
-        COUNT(*) as total,
-        SUM(CASE WHEN sync_status = 'success' THEN 1 ELSE 0 END) as synced
-      FROM satu_sehat_sync
-      GROUP BY entity_type
-    `);
+    // Get the stats by querying the database directly
+    type StatRow = {
+      entityType: string;
+      total: number;
+      synced: number;
+    };
+    
+    const queryResults = await db
+      .select({
+        entityType: satuSehatSync.entityType,
+        total: sql<number>`COUNT(*)`,
+        synced: sql<number>`SUM(CASE WHEN ${satuSehatSync.syncStatus} = 'success' THEN 1 ELSE 0 END)`
+      })
+      .from(satuSehatSync)
+      .groupBy(satuSehatSync.entityType);
     
     const stats: Record<string, { total: number, synced: number }> = {};
     
-    for (const row of results.rows) {
-      stats[row.entity_type] = {
-        total: parseInt(row.total as string),
-        synced: parseInt(row.synced as string)
+    // Process results
+    for (const row of queryResults) {
+      stats[row.entityType] = {
+        total: Number(row.total),
+        synced: Number(row.synced) || 0
       };
     }
     
