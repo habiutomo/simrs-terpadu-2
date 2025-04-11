@@ -8,6 +8,8 @@ import MainLayout from "@/components/layout/main-layout";
 import Dashboard from "@/pages/dashboard";
 import PatientsIndex from "@/pages/patients/index";
 import PatientRegister from "@/pages/patients/register";
+import PatientsData from "@/pages/patients/data";
+import PatientsHistory from "@/pages/patients/riwayat";
 import AppointmentsIndex from "@/pages/appointments/index";
 import AppointmentCreate from "@/pages/appointments/create";
 import MedicalRecordsIndex from "@/pages/medical-records/index";
@@ -27,6 +29,8 @@ function Router() {
       <Route path="/" component={Dashboard} />
       <Route path="/patients" component={PatientsIndex} />
       <Route path="/patients/register" component={PatientRegister} />
+      <Route path="/patients/data" component={PatientsData} />
+      <Route path="/patients/riwayat" component={PatientsHistory} />
       <Route path="/appointments" component={AppointmentsIndex} />
       <Route path="/appointments/create" component={AppointmentCreate} />
       <Route path="/medical-records" component={MedicalRecordsIndex} />
@@ -38,6 +42,7 @@ function Router() {
       <Route path="/reports" component={ReportsIndex} />
       <Route path="/satu-sehat" component={SatuSehatIndex} />
       <Route path="/settings" component={Settings} />
+      <Route path="/bantuan" component={() => <div className="p-4">Halaman Bantuan</div>} />
       <Route component={NotFound} />
     </Switch>
   );
