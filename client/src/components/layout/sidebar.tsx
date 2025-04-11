@@ -1,3 +1,4 @@
+
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -8,8 +9,8 @@ import {
   FileText,
   Stethoscope,
   Hotel,
-  Pills,
-  TestTubes,
+  Pill,
+  TestTube,
   Radio,
   BarChart2,
   Settings,
@@ -67,10 +68,10 @@ const Sidebar = () => {
             <Hotel size={20} /> Rawat Inap
           </Link>
           <Link href="/pharmacy" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
-            <Pills size={20} /> Farmasi
+            <Pill size={20} /> Farmasi
           </Link>
           <Link href="/laboratory" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
-            <TestTubes size={20} /> Laboratorium
+            <TestTube size={20} /> Laboratorium
           </Link>
           <Link href="/radiology" className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10">
             <Radio size={20} /> Radiologi
