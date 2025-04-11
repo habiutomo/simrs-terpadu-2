@@ -12,7 +12,7 @@
   }
 
   .sidebar-link.active {
-    @apply bg-primary bg-opacity-10 text-primary border-l-4 border-primary;
+    @apply text-white border-l-4 border-white bg-[#172a46];
   }
 
   @media (max-width: 768px) {
