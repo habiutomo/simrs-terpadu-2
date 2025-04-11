@@ -2,7 +2,21 @@
 export const NAV_LINKS = [
   { href: "/", icon: "dashboard", label: "Dashboard" },
   { href: "/patients", icon: "people", label: "Pasien" },
-  { href: "/appointments", icon: "event", label: "Janji Dokter" },
+  { 
+    href: "/patients/data",
+    icon: "person_search", 
+    label: "Data Pasien",
+    parent: "patients",
+    isSubmenu: true
+  },
+  { 
+    href: "/patients/riwayat", 
+    icon: "history", 
+    label: "Riwayat Kunjungan",
+    parent: "patients",
+    isSubmenu: true
+  },
+  { href: "/appointments", icon: "event", label: "Jadwal & Appointment" },
   { href: "/medical-records", icon: "folder", label: "Rekam Medis" },
   { href: "/pharmacy", icon: "medication", label: "Farmasi" },
   { href: "/billing", icon: "receipt", label: "Billing" },

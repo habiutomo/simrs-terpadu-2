@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Bell, Menu, Search } from "lucide-react";
+import { Bell, Menu, Search, Settings } from "lucide-react";
 
 interface HeaderProps {
   pageTitle: string;
@@ -22,10 +22,13 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, toggleSidebar }) => {
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle sidebar</span>
           </Button>
-          <h2 className="text-lg font-semibold text-neutral-600">{pageTitle}</h2>
+          <div>
+            <h2 className="text-xl font-bold text-neutral-700">{pageTitle}</h2>
+            <p className="text-sm text-neutral-500">Selamat datang kembali</p>
+          </div>
         </div>
-        <div className="flex items-center">
-          <div className="relative mr-4">
+        <div className="flex items-center gap-2">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
             <Input 
               type="text" 
@@ -36,8 +39,14 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, toggleSidebar }) => {
           <div className="relative">
             <Button variant="ghost" size="icon" className="text-neutral-500 hover:bg-neutral-100 rounded-full relative">
               <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               <span className="sr-only">Notifications</span>
+            </Button>
+          </div>
+          <div>
+            <Button variant="ghost" size="icon" className="text-neutral-500 hover:bg-neutral-100 rounded-full">
+              <Settings className="h-5 w-5" />
+              <span className="sr-only">Settings</span>
             </Button>
           </div>
         </div>

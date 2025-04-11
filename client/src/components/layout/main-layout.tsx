@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     if (!path) return "Dashboard";
     
     // Special case for nested routes
-    if (location.includes("/register")) return "Daftar Pasien Baru";
+    if (location.includes("/register")) return "Pendaftaran Pasien Baru";
     if (location.includes("/create")) {
       if (location.includes("/appointments")) return "Buat Janji Dokter";
       if (location.includes("/medical-records")) return "Buat Rekam Medis";
@@ -35,14 +35,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       billing: "Billing",
       reports: "Laporan",
       "satu-sehat": "Satu Sehat",
-      settings: "Pengaturan"
+      settings: "Pengaturan",
+      bantuan: "Bantuan"
     };
     
     return titles[path] || path.charAt(0).toUpperCase() + path.slice(1);
   };
   
   return (
-    <div className="flex h-screen bg-neutral-100">
+    <div className="flex h-screen bg-neutral-100 overflow-hidden">
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
       
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -51,8 +52,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           toggleSidebar={() => setSidebarOpen(!sidebarOpen)} 
         />
         
-        <main className="flex-1 overflow-y-auto p-4">
-          {children}
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="container mx-auto max-w-screen-2xl">
+            {children}
+          </div>
         </main>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { NAV_LINKS } from "@/lib/constants";
 import { CURRENT_USER } from "@/lib/constants";
@@ -10,6 +10,32 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const [location] = useLocation();
+  const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
+  
+  const toggleMenu = (path: string) => {
+    if (expandedMenus.includes(path)) {
+      setExpandedMenus(expandedMenus.filter(item => item !== path));
+    } else {
+      setExpandedMenus([...expandedMenus, path]);
+    }
+  };
+  
+  const isMenuActive = (href: string): boolean => {
+    return location === href || (href !== "/" && location.startsWith(href));
+  };
+  
+  const isParentActive = (parent: string): boolean => {
+    return NAV_LINKS.some(link => 
+      link.parent === parent && isMenuActive(link.href)
+    );
+  };
+  
+  const shouldExpandMenu = (href: string): boolean => {
+    return expandedMenus.includes(href) || isParentActive(href);
+  };
+  
+  // Group menu items by parent
+  const mainLinks = NAV_LINKS.filter(link => !link.isSubmenu);
   
   return (
     <aside 
@@ -34,28 +60,77 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
         {/* Navigation Links */}
         <nav className="flex-1 overflow-y-auto py-4">
           <ul>
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href}>
-                  <a 
-                    className={`flex items-center px-4 py-3 hover:bg-[#172a46] text-gray-300 ${
-                      (location === link.href || 
-                       (link.href !== "/" && location.startsWith(link.href))) 
-                        ? "sidebar-link active" 
-                        : ""
-                    }`}
-                    onClick={() => {
-                      if (window.innerWidth < 768) {
-                        setOpen(false);
-                      }
-                    }}
-                  >
-                    <span className="material-icons text-sm mr-3">{link.icon}</span>
-                    <span>{link.label}</span>
-                  </a>
-                </Link>
-              </li>
-            ))}
+            {mainLinks.map((link) => {
+              // Find any child menus
+              const childMenus = NAV_LINKS.filter(item => item.parent === link.href.substring(1));
+              const hasChildren = childMenus.length > 0;
+              const isExpanded = shouldExpandMenu(link.href.substring(1));
+              
+              return (
+                <li key={link.href} className="mb-1">
+                  {hasChildren ? (
+                    <div>
+                      <button
+                        className={`w-full flex items-center justify-between px-4 py-3 hover:bg-[#172a46] text-gray-300 ${
+                          (isMenuActive(link.href) || isParentActive(link.href.substring(1))) 
+                            ? "sidebar-link active" 
+                            : ""
+                        }`}
+                        onClick={() => toggleMenu(link.href.substring(1))}
+                      >
+                        <div className="flex items-center">
+                          <span className="material-icons text-sm mr-3">{link.icon}</span>
+                          <span>{link.label}</span>
+                        </div>
+                        <span className="material-icons text-xs">
+                          {isExpanded ? "expand_less" : "expand_more"}
+                        </span>
+                      </button>
+                      
+                      {isExpanded && (
+                        <ul className="pl-10 bg-[#0c1e3a]">
+                          {childMenus.map(childItem => (
+                            <li key={childItem.href}>
+                              <Link href={childItem.href}>
+                                <a 
+                                  className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] ${
+                                    isMenuActive(childItem.href) ? "text-white font-medium" : ""
+                                  }`}
+                                  onClick={() => {
+                                    if (window.innerWidth < 768) {
+                                      setOpen(false);
+                                    }
+                                  }}
+                                >
+                                  <span className="material-icons text-xs mr-3">{childItem.icon}</span>
+                                  <span className="text-sm">{childItem.label}</span>
+                                </a>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ) : (
+                    <Link href={link.href}>
+                      <a 
+                        className={`flex items-center px-4 py-3 hover:bg-[#172a46] text-gray-300 ${
+                          isMenuActive(link.href) ? "sidebar-link active" : ""
+                        }`}
+                        onClick={() => {
+                          if (window.innerWidth < 768) {
+                            setOpen(false);
+                          }
+                        }}
+                      >
+                        <span className="material-icons text-sm mr-3">{link.icon}</span>
+                        <span>{link.label}</span>
+                      </a>
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </nav>
         
