@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMRS - Technical Manual</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito', sans-serif;
+            color: #2563eb;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1e40af;
+            font-size: 28px;
+            border-bottom: 2px solid #1e40af;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #2563eb;
+            font-size: 24px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            color: #2563eb;
+            font-size: 20px;
+        }
+        
+        p {
+            margin-bottom: 1em;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .toc {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .note {
+            background-color: #fff4e5;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tip {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .centered {
+            text-align: center;
+        }
+        
+        .logo {
+            margin: 20px auto;
+            display: block;
+            width: 150px;
+            border: none;
+            box-shadow: none;
+        }
+        
+        ol, ul {
+            padding-left: 25px;
+        }
+        
+        .cover {
+            height: 240mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .cover h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            border: none;
+        }
+        
+        .cover h2 {
+            font-size: 24px;
+            color: #555;
+            margin-top: 0;
+            font-weight: 400;
+            border: none;
+        }
+        
+        .cover .version {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        pre, code {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #f5f7f9;
+            border-radius: 3px;
+            padding: 0.2em 0.4em;
+            font-size: 85%;
+        }
+        
+        pre {
+            padding: 1em;
+            overflow-x: auto;
+            line-height: 1.45;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .architecture-diagram {
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eaeaea;
+            padding-top: 10px;
+        }
+        
+        .api-endpoint {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .api-endpoint h4 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 12px;
+        }
+        
+        .get {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+        
+        .post {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        
+        .put {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        
+        .delete {
+            background-color: #ffebee;
+            color: #b71c1c;
+        }
+        
+        .fhir-resource {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .fhir-resource h4 {
+            margin-top: 0;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>SISTEM INFORMASI MANAJEMEN RUMAH SAKIT</h1>
+        <h2>MANUAL TEKNIS</h2>
+        <p>DOKUMENTASI UNTUK ADMINISTRATOR & TIM DEVELOPER</p>
+      <p class="version">Versi 1.0 - April 2023</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>DAFTAR ISI</h1>
+    <div class="toc">
+        <ul>
+            <li>1. Pendahuluan
+                <ul>
+                    <li>1.1. Tujuan Dokumen</li>
+                    <li>1.2. Audiens</li>
+                    <li>1.3. Cakupan Dokumentasi</li>
+                </ul>
+            </li>
+            <li>2. Arsitektur Sistem
+                <ul>
+                    <li>2.1. Arsitektur Aplikasi</li>
+                    <li>2.2. Teknologi yang Digunakan</li>
+                    <li>2.3. Arsitektur Database</li>
+                </ul>
+            </li>
+            <li>3. Konfigurasi Sistem
+                <ul>
+                    <li>3.1. Persyaratan Sistem</li>
+                    <li>3.2. Instalasi dan Deployment</li>
+                    <li>3.3. Konfigurasi Server</li>
+                    <li>3.4. Konfigurasi Database</li>
+                </ul>
+            </li>
+            <li>4. Manajemen Pengguna
+                <ul>
+                    <li>4.1. Struktur Peran dan Hak Akses</li>
+                    <li>4.2. Manajemen Akun Administrator</li>
+                    <li>4.3. Manajemen Akun Pengguna</li>
+                </ul>
+            </li>
+            <li>5. API dan Integrasi
+                <ul>
+                    <li>5.1. REST API</li>
+                    <li>5.2. Integrasi Satu Sehat FHIR</li>
+                    <li>5.3. Autentikasi dan Otorisasi API</li>
+                    <li>5.4. Contoh Penggunaan API</li>
+                </ul>
+            </li>
+            <li>6. Model Data
+                <ul>
+                    <li>6.1. Skema Database</li>
+                    <li>6.2. Relasi Antar Tabel</li>
+                    <li>6.3. Struktur Data FHIR</li>
+                </ul>
+            </li>
+            <li>7. Keamanan Sistem
+                <ul>
+                    <li>7.1. Keamanan Data</li>
+                    <li>7.2. Enkripsi</li>
+                    <li>7.3. Audit Trail</li>
+                    <li>7.4. Backup dan Recovery</li>
+                </ul>
+            </li>
+            <li>8. Konfigurasi Satu Sehat
+                <ul>
+                    <li>8.1. Alur Integrasi</li>
+                    <li>8.2. Konfigurasi OAuth</li>
+                    <li>8.3. Mapping Data</li>
+                    <li>8.4. Troubleshooting Integrasi</li>
+                </ul>
+            </li>
+            <li>9. Maintenance dan Monitoring
+                <ul>
+                    <li>9.1. Log Sistem</li>
+                    <li>9.2. Monitoring Performa</li>
+                    <li>9.3. Backup Rutin</li>
+                    <li>9.4. Penanganan Error</li>
+                </ul>
+            </li>
+            <li>10. Pengembangan Lanjutan
+                <ul>
+                    <li>10.1. Framework dan Struktur Kode</li>
+                    <li>10.2. Panduan Pengembangan Frontend</li>
+                    <li>10.3. Panduan Pengembangan Backend</li>
+                    <li>10.4. Testing dan QA</li>
+                </ul>
+            </li>
+            <li>11. Troubleshooting
+                <ul>
+                    <li>11.1. Error Umum</li>
+                    <li>11.2. Masalah Database</li>
+                    <li>11.3. Masalah Integrasi</li>
+                    <li>11.4. Masalah Performa</li>
+                </ul>
+            </li>
+            <li>12. Lampiran</li>
+            <li>13. Referensi</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>1. PENDAHULUAN</h1>
+    
+    <h2>1.1. Tujuan Dokumen</h2>
+    <p>
+        Dokumen ini bertujuan untuk memberikan panduan teknis komprehensif mengenai arsitektur,
+        instalasi, konfigurasi, pengembangan, dan pemeliharaan Sistem Informasi Manajemen Rumah Sakit (SIMRS)
+        dengan integrasi Satu Sehat. Manual ini ditujukan untuk administrator sistem, developer,
+        dan staf IT yang bertanggung jawab dalam mengimplementasikan dan memelihara sistem.
+    </p>
+    
+    <h2>1.2. Audiens</h2>
+    <p>
+        Manual teknis ini diperuntukkan bagi:
+    </p>
+    <ul>
+        <li><strong>Administrator Sistem</strong> - Bertanggung jawab untuk instalasi, konfigurasi, dan pemeliharaan sistem</li>
+        <li><strong>Developer</strong> - Mengembangkan fitur baru dan memperbaiki masalah dalam sistem</li>
+        <li><strong>Database Administrator</strong> - Mengelola database dan mengoptimalkan performa</li>
+        <li><strong>Staf IT Rumah Sakit</strong> - Mendukung operasional sistem sehari-hari</li>
+        <li><strong>Integrator Sistem</strong> - Menangani integrasi dengan sistem eksternal termasuk Satu Sehat</li>
+    </ul>
+    
+    <h2>1.3. Cakupan Dokumentasi</h2>
+    <p>
+        Manual teknis ini mencakup:
+    </p>
+    <ul>
+        <li>Arsitektur teknologi dan infrastruktur sistem</li>
+        <li>Persyaratan dan proses instalasi sistem</li>
+        <li>Konfigurasi dasar dan lanjutan</li>
+        <li>Skema dan struktur database</li>
+        <li>API dan mekanisme integrasi</li>
+        <li>Implementasi integrasi Satu Sehat FHIR</li>
+        <li>Keamanan sistem dan manajemen hak akses</li>
+        <li>Panduan pemeliharaan dan monitoring</li>
+        <li>Langkah-langkah troubleshooting</li>
+        <li>Panduan pengembangan lanjutan</li>
+    </ul>
+    
+    <div class="page-break"></div>
+    
+    <h1>2. ARSITEKTUR SISTEM</h1>
+    
+    <h2>2.1. Arsitektur Aplikasi</h2>
+    <p>
+        SIMRS dibangun menggunakan arsitektur berbasis layanan (service-oriented architecture) dengan
+        pendekatan microservices untuk memastikan skalabilitas dan pemeliharaan yang mudah.
+        Arsitektur aplikasi dibagi menjadi beberapa lapisan:
+    </p>
+    
+    <div class="centered">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNTAwIiB2aWV3Qm94PSIwIDAgODAwIDUwMCI+CiAgPHJlY3QgeD0iNSIgeT0iNSIgd2lkdGg9Ijc5MCIgaGVpZ2h0PSI0OTAiIGZpbGw9IiNmYWZhZmEiIHN0cm9rZT0iI2NjYyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPHRleHQgeD0iNDAwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iYm9sZCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGVuZGVrYXRhbiBBcnNpdGVrdHVyIE1pY3Jvc2VydmljZXMgU0lNUlM8L3RleHQ+CiAgCiAgPCEtLSBDbGllbnQgTGF5ZXIgLS0+CiAgPHJlY3QgeD0iMjAwIiB5PSI3MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2UzZjJmZCIgc3Ryb2tlPSIjMWU4OGU1IiBzdHJva2Utd2lkdGg9IjIiIHJ4PSI1IiByeT0iNSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iMTA1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkNsaWVudCBBcHBsaWNhdGlvbiAoUmVhY3QvVHlwZVNjcmlwdCk8L3RleHQ+CiAgCiAgPCEtLSBBUEkgR2F0ZXdheSAtLT4KICA8cmVjdCB4PSIyMDAiIHk9IjE2MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2YxZjhmZSIgc3Ryb2tlPSIjN2UzYWY4IiBzdHJva2Utd2lkdGg9IjIiIHJ4PSI1IiByeT0iNSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iMTk1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFQSSBHYXRld2F5IC8gQmFja2VuZCBmb3IgRnJvbnRlbmQgKEJGRik8L3RleHQ+CiAgCiAgPCEtLSBTZXJ2aWNlcyAtLT4KICA8cmVjdCB4PSI1MCIgeT0iMjUwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZThlNWVjIiBzdHJva2U9IiM5MzZmZDIiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+CiAgPHRleHQgeD0iMTQwIiB5PSIyODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UGF0aWVudCBTZXJ2aWNlPC90ZXh0PgogIAogIDxyZWN0IHg9IjI1MCIgeT0iMjUwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZThlNWVjIiBzdHJva2U9IiM5MzZmZDIiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+CiAgPHRleHQgeD0iMzQwIiB5PSIyODUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TWVkaWNhbCBSZWNvcmQgU2VydmljZTwvdGV4dD4KICAKICA8cmVjdCB4PSI0NTAiIHk9IjI1MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2U4ZTVlYyIgc3Ryb2tlPSIjOTM2ZmQyIiBzdHJva2Utd2lkdGg9IjIiIHJ4PSI1IiByeT0iNSIvPgogIDx0ZXh0IHg9IjU0MCIgeT0iMjg1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBoYXJtYWN5IFNlcnZpY2U8L3RleHQ+CiAgCiAgPHJlY3QgeD0iNjUwIiB5PSIyNTAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNjAiIGZpbGw9IiNlOGU1ZWMiIHN0cm9rZT0iIzkzNmZkMiIgc3Ryb2tlLXdpZHRoPSIyIiByeD0iNSIgcnk9IjUiLz4KICA8dGV4dCB4PSI3MDAiIHk9IjI4NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4uLi48L3RleHQ+CiAgCiAgPCEtLSBEYXRhIEludGVncmF0aW9uIExheWVyIC0tPgogIDxyZWN0IHg9IjIwMCIgeT0iMzQwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZWNlZmYxIiBzdHJva2U9IiM3NTc1NzUiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+CiAgPHRleHQgeD0iNDAwIiB5PSIzNzUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RGF0YSBJbnRlZ3JhdGlvbiAmIFNhdHUgU2VoYXQgRkhJUiBBZGFwdGVyPC90ZXh0PgogIAogIDwhLS0gRGF0YWJhc2UgTGF5ZXIgLS0+CiAgPHJlY3QgeD0iMjUwIiB5PSI0MzAiIHdpZHRoPSIxNTAiIGhlaWdodD0iNDUiIGZpbGw9IiNlMWYyZmYiIHN0cm9rZT0iIzFhNzNlOCIgc3Ryb2tlLXdpZHRoPSIyIiByeD0iNSIgcnk9IjUiLz4KICA8dGV4dCB4PSIzMjUiIHk9IjQ1OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5Qb3N0Z3JlU1FMPC90ZXh0PgogIAogIDxyZWN0IHg9IjQyMCIgeT0iNDMwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjQ1IiBmaWxsPSIjZjVlNmZmIiBzdHJva2U9IiM4MzJmYWYiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+CiAgPHRleHQgeD0iNDk1IiB5PSI0NTgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UmVkaXMgQ2FjaGU8L3RleHQ+CiAgCiAgPCEtLSBDb25uZWN0aW9ucyAtLT4KICA8IS0tIENsaWVudCB0byBBUEkgR2F0ZXdheSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iMTMwIiB4Mj0iNDAwIiB5Mj0iMTYwIiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMiIvPgogIAogIDwhLS0gQVBJIEdhdGV3YXkgdG8gU2VydmljZXMgLS0+CiAgPGxpbmUgeDE9IjQwMCIgeTE9IjIyMCIgeDI9IjE0MCIgeTI9IjI1MCIgc3Ryb2tlPSIjNDQ0IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iNDAwIiB5MT0iMjIwIiB4Mj0iMzQwIiB5Mj0iMjUwIiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSI0MDAiIHkxPSIyMjAiIHgyPSI1NDAiIHkyPSIyNTAiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjQwMCIgeTE9IjIyMCIgeDI9IjcwMCIgeTI9IjI1MCIgc3Ryb2tlPSIjNDQ0IiBzdHJva2Utd2lkdGg9IjIiLz4KICAKICA8IS0tIFNlcnZpY2VzIHRvIERhdGEgSW50ZWdyYXRpb24gLS0+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjMxMCIgeDI9IjMwMCIgeTI9IjM0MCIgc3Ryb2tlPSIjNDQ0IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iMzQwIiB5MT0iMzEwIiB4Mj0iMzUwIiB5Mj0iMzQwIiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSI1NDAiIHkxPSIzMTAiIHgyPSI0NTAiIHkyPSIzNDAiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjcwMCIgeTE9IjMxMCIgeDI9IjUwMCIgeTI9IjM0MCIgc3Ryb2tlPSIjNDQ0IiBzdHJva2Utd2lkdGg9IjIiLz4KICAKICA8IS0tIERhdGEgSW50ZWdyYXRpb24gdG8gRGF0YWJhc2VzIC0tPgogIDxsaW5lIHgxPSIzMjUiIHkxPSI0MDAiIHgyPSIzMjUiIHkyPSI0MzAiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjQ3NSIgeTE9IjQwMCIgeDI9IjQ3NSIgeTI9IjQzMCIgc3Ryb2tlPSIjNDQ0IiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+" alt="Arsitektur Sistem SIMRS" class="architecture-diagram">
+        <p><em>Gambar 1: Arsitektur Sistem SIMRS</em></p>
+    </div>
+    
+    <ol>
+        <li><strong>Presentation Layer (Client)</strong> - Antarmuka pengguna berbasis web dibangun dengan React dan TypeScript</li>
+        <li><strong>API Gateway / BFF</strong> - Mengelola autentikasi, validasi permintaan, dan routing ke microservices</li>
+        <li><strong>Microservices</strong> - Layanan terpisah untuk setiap domain fungsional (Pasien, Rekam Medis, Farmasi, dll)</li>
+        <li><strong>Data Integration Layer</strong> - Menangani transformasi dan sinkronisasi data dengan Satu Sehat</li>
+        <li><strong>Database Layer</strong> - PostgreSQL untuk penyimpanan data utama dan Redis untuk caching</li>
+    </ol>
+    
+    <h2>2.2. Teknologi yang Digunakan</h2>
+    <p>
+        SIMRS dikembangkan menggunakan stack teknologi modern:
+    </p>
+    <table>
+        <tr>
+            <th>Komponen</th>
+            <th>Teknologi</th>
+            <th>Versi</th>
+            <th>Deskripsi</th>
+        </tr>
+        <tr>
+            <td>Frontend</td>
+            <td>React, TypeScript</td>
+            <td>18.x, 4.x</td>
+            <td>Library JavaScript untuk membangun antarmuka pengguna</td>
+        </tr>
+        <tr>
+            <td>State Management</td>
+            <td>TanStack Query, Context API</td>
+            <td>4.x</td>
+            <td>Manajemen state dan data fetching</td>
+        </tr>
+        <tr>
+            <td>UI Components</td>
+            <td>Shadcn UI, Tailwind CSS</td>
+            <td>3.x</td>
+            <td>Framework CSS dan komponen UI</td>
+        </tr>
+        <tr>
+            <td>Backend</td>
+            <td>Node.js, Express</td>
+            <td>18.x, 4.x</td>
+            <td>Runtime JavaScript dan framework web</td>
+        </tr>
+        <tr>
+            <td>ORM</td>
+            <td>Drizzle ORM</td>
+            <td>0.28.x</td>
+            <td>SQL query builder dan ORM</td>
+        </tr>
+        <tr>
+            <td>Database</td>
+            <td>PostgreSQL</td>
+            <td>14.x</td>
+            <td>Database relasional</td>
+        </tr>
+        <tr>
+            <td>Caching</td>
+            <td>Redis</td>
+            <td>6.x</td>
+            <td>In-memory data store untuk caching</td>
+        </tr>
+        <tr>
+            <td>Authentication</td>
+            <td>Passport.js, JWT</td>
+            <td>0.6.x</td>
+            <td>Middleware autentikasi dan token berbasis JSON</td>
+        </tr>
+        <tr>
+            <td>API Documentation</td>
+            <td>Swagger/OpenAPI</td>
+            <td>3.0</td>
+            <td>Spesifikasi dan dokumentasi API</td>
+        </tr>
+        <tr>
+            <td>FHIR Implementation</td>
+            <td>FHIR.js</td>
+            <td>0.5.x</td>
+            <td>Library untuk implementasi FHIR</td>
+        </tr>
+    </table>
+    
+    <h2>2.3. Arsitektur Database</h2>
+    <p>
+        Database SIMRS menggunakan arsitektur relasional dengan PostgreSQL sebagai penyimpanan utama.
+        Struktur database dirancang berdasarkan domain bisnis dengan mempertimbangkan kemudahan mapping ke FHIR.
+    </p>
+    <p>
+        Komponen database utama:
+    </p>
+    <ul>
+        <li><strong>Schema Inti</strong> - Menyimpan data utama seperti pasien, rekam medis, dan dokter</li>
+        <li><strong>Schema Operasional</strong> - Menyimpan data transaksional seperti kunjungan, resep, dan hasil lab</li>
+        <li><strong>Schema Audit</strong> - Menyimpan log perubahan data untuk keperluan audit</li>
+        <li><strong>Schema FHIR</strong> - Menyimpan data mapping dan hasil sinkronisasi dengan Satu Sehat</li>
+    </ul>
+    
+    <div class="page-break"></div>
+    
+    <h1>5. API DAN INTEGRASI</h1>
+    
+    <h2>5.1. REST API</h2>
+    <p>
+        SIMRS menyediakan REST API komprehensif untuk akses ke semua fungsionalitas sistem. API mengikuti
+        prinsip RESTful dengan standarisasi endpoint, format permintaan/respons, dan kode status.
+    </p>
+    
+    <h3>Struktur Endpoint</h3>
+    <p>
+        Semua endpoint API menggunakan format berikut:
+    </p>
+    <pre><code>https://[domain]/api/[versi]/[resource]/[id]/[subresource]</code></pre>
+    
+    <p>Contoh:</p>
+    <ul>
+        <li><code>/api/v1/pasien</code> - Mendapatkan daftar pasien</li>
+        <li><code>/api/v1/pasien/123</code> - Mendapatkan detail pasien dengan ID 123</li>
+        <li><code>/api/v1/pasien/123/rekam-medis</code> - Mendapatkan rekam medis untuk pasien dengan ID 123</li>
+    </ul>
+    
+    <h3>Format Respons</h3>
+    <p>
+        Semua respons API menggunakan format JSON standar:
+    </p>
+    <pre><code>{
+  "status": "success", // atau "error"
+  "data": { ... }, // data respons utama
+  "meta": { // metadata dan informasi pagination
+    "page": 1,
+    "perPage": 10,
+    "totalPages": 5,
+    "totalCount": 42
+  },
+  "error": { // hanya ada jika status adalah "error"
+    "code": "ERROR_CODE",
+    "message": "Deskripsi error",
+    "details": { ... }
+  }
+}</code></pre>
+    
+    <h3>Contoh Endpoint API</h3>
+    
+    <div class="api-endpoint">
+        <h4><span class="method get">GET</span> /api/v1/pasien</h4>
+        <p>Mendapatkan daftar pasien dengan pagination dan filter.</p>
+        <p><strong>Query Parameters:</strong></p>
+        <ul>
+            <li><code>page</code> - Nomor halaman (default: 1)</li>
+            <li><code>perPage</code> - Jumlah item per halaman (default: 10)</li>
+            <li><code>search</code> - Kata kunci pencarian (nama, NIK, atau Nomor RM)</li>
+            <li><code>filter</code> - Filter tambahan (JSON encoded)</li>
+        </ul>
+        <p><strong>Response:</strong></p>
+        <pre><code>{
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "nomorRM": "RM23001234",
+      "nama": "Budi Santoso",
+      "nik": "3201012345678901",
+      "jenisKelamin": "laki-laki",
+      "tanggalLahir": "1980-05-15",
+      "alamat": "Jl. Merdeka No. 123, Jakarta",
+      "telepon": "081234567890",
+      "statusSinkronisasi": "sukses",
+      "satuSehatId": "ABCD1234567890"
+    },
+    // ... more patients
+  ],
+  "meta": {
+    "page": 1,
+    "perPage": 10,
+    "totalPages": 5,
+    "totalCount": 42
+  }
+}</code></pre>
+    </div>
+    
+    <div class="api-endpoint">
+        <h4><span class="method post">POST</span> /api/v1/pasien</h4>
+        <p>Mendaftarkan pasien baru.</p>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+  "nama": "Dewi Sartika",
+  "nik": "3201012345678902",
+  "jenisKelamin": "perempuan",
+  "tanggalLahir": "1992-08-21",
+  "alamat": "Jl. Kenanga No. 45, Bandung",
+  "telepon": "087654321098",
+  "email": "dewi.s@example.com",
+  "golonganDarah": "O",
+  "alergi": ["Penisilin", "Kacang"],
+  "catatanKhusus": "Pasien dengan kondisi asma"
+}</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>{
+  "status": "success",
+  "data": {
+    "id": 43,
+    "nomorRM": "RM23001277",
+    "nama": "Dewi Sartika",
+    "nik": "3201012345678902",
+    "jenisKelamin": "perempuan",
+    "tanggalLahir": "1992-08-21",
+    "alamat": "Jl. Kenanga No. 45, Bandung",
+    "telepon": "087654321098",
+    "email": "dewi.s@example.com",
+    "golonganDarah": "O",
+    "alergi": ["Penisilin", "Kacang"],
+    "catatanKhusus": "Pasien dengan kondisi asma",
+    "createdAt": "2023-04-10T08:15:30Z",
+    "updatedAt": "2023-04-10T08:15:30Z",
+    "statusSinkronisasi": "belum",
+    "satuSehatId": null
+  }
+}</code></pre>
+    </div>
+    
+    <div class="api-endpoint">
+        <h4><span class="method post">POST</span> /api/v1/satu-sehat/sync/pasien/:id</h4>
+        <p>Sinkronisasi data pasien dengan Satu Sehat.</p>
+        <p><strong>Response:</strong></p>
+        <pre><code>{
+  "status": "success",
+  "data": {
+    "id": 43,
+    "nomorRM": "RM23001277",
+    "statusSinkronisasi": "sukses",
+    "satuSehatId": "EFGH9876543210",
+    "syncDetails": {
+      "timestamp": "2023-04-10T08:20:45Z",
+      "resourceType": "Patient",
+      "resourceId": "EFGH9876543210",
+      "status": "created"
+    }
+  }
+}</code></pre>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h2>5.2. Integrasi Satu Sehat FHIR</h2>
+    <p>
+        SIMRS terintegrasi dengan platform Satu Sehat menggunakan standar FHIR (Fast Healthcare Interoperability Resources)
+        untuk pertukaran data kesehatan. Integrasi ini memungkinkan sinkronisasi data pasien, kunjungan,
+        diagnosis, dan informasi kesehatan lainnya.
+    </p>
+    
+    <h3>Implementasi FHIR</h3>
+    <p>
+        Sistem mengimplementasikan FHIR R4 (4.0.1) yang merupakan versi yang digunakan oleh Satu Sehat.
+        Berikut resource FHIR utama yang diimplementasikan:
+    </p>
+    
+    <div class="fhir-resource">
+        <h4>Patient</h4>
+        <p>
+            Resource ini memetakan data pasien dari tabel <code>pasien</code> dengan transformasi atribut
+            sesuai ketentuan Satu Sehat.
+        </p>
+        <p><strong>Mapping Utama:</strong></p>
+        <ul>
+            <li><code>nama</code> → <code>Patient.name</code></li>
+            <li><code>nik</code> → <code>Patient.identifier</code> dengan sistem identifikasi NIK</li>
+            <li><code>nomorRM</code> → <code>Patient.identifier</code> dengan sistem identifikasi lokal</li>
+            <li><code>jenisKelamin</code> → <code>Patient.gender</code></li>
+            <li><code>tanggalLahir</code> → <code>Patient.birthDate</code></li>
+            <li><code>alamat</code> → <code>Patient.address</code></li>
+            <li><code>telepon</code> → <code>Patient.telecom</code> dengan sistem telepon</li>
+            <li><code>email</code> → <code>Patient.telecom</code> dengan sistem email</li>
+        </ul>
+    </div>
+    
+    <div class="fhir-resource">
+        <h4>Encounter</h4>
+        <p>
+            Resource ini memetakan kunjungan pasien (rawat jalan atau rawat inap) dari tabel <code>jadwal</code>
+            dan <code>rawat_inap</code>.
+        </p>
+        <p><strong>Mapping Utama:</strong></p>
+        <ul>
+            <li><code>id</code> → <code>Encounter.identifier</code></li>
+            <li><code>pasienId</code> → <code>Encounter.subject</code> (referensi ke Patient)</li>
+            <li><code>dokterUserId</code> → <code>Encounter.participant</code></li>
+            <li><code>tanggal</code> → <code>Encounter.period.start</code></li>
+            <li><code>jenisPelayanan</code> → <code>Encounter.class</code></li>
+            <li><code>status</code> → <code>Encounter.status</code></li>
+        </ul>
+    </div>
+    
+    <div class="fhir-resource">
+        <h4>Observation</h4>
+        <p>
+            Resource ini memetakan hasil pemeriksaan vital signs, laboratorium, dan radiologi
+            dari tabel <code>rekam_medis</code>, <code>laboratorium</code>, dan <code>radiologi</code>.
+        </p>
+        <p><strong>Mapping Utama:</strong></p>
+        <ul>
+            <li><code>id</code> → <code>Observation.identifier</code></li>
+            <li><code>pasienId</code> → <code>Observation.subject</code> (referensi ke Patient)</li>
+            <li><code>rekamMedisId</code> → <code>Observation.encounter</code> (referensi ke Encounter)</li>
+            <li><code>tanggal</code> → <code>Observation.effectiveDateTime</code></li>
+            <li><code>jenisPemeriksaan</code> → <code>Observation.code</code></li>
+            <li><code>hasilPemeriksaan</code> → <code>Observation.value[x]</code></li>
+        </ul>
+    </div>
+    
+    <h3>Alur Sinkronisasi FHIR</h3>
+    <ol>
+        <li><strong>Registrasi OAuth Client</strong> - Melalui Kementerian Kesehatan untuk mendapatkan credentials</li>
+        <li><strong>Otentikasi</strong> - Mendapatkan access token dari server otentikasi Satu Sehat</li>
+        <li><strong>Transformasi Data</strong> - Mengonversi data SIMRS ke format FHIR yang valid</li>
+        <li><strong>Validasi</strong> - Memastikan resource FHIR sesuai dengan profil Satu Sehat</li>
+        <li><strong>Pengiriman Data</strong> - Mengirim resource FHIR ke endpoint Satu Sehat</li>
+        <li><strong>Penanganan Respons</strong> - Menyimpan ID resource dan status sinkronisasi</li>
+        <li><strong>Pembaruan Status</strong> - Memperbarui status sinkronisasi di database lokal</li>
+    </ol>
+    
+    <div class="page-break"></div>
+    
+    <h1>7. KEAMANAN SISTEM</h1>
+    
+    <h2>7.1. Keamanan Data</h2>
+    <p>
+        SIMRS mengimplementasikan berbagai lapisan keamanan untuk melindungi data pasien dan
+        informasi kesehatan sesuai dengan regulasi yang berlaku:
+    </p>
+    
+    <h3>Access Control</h3>
+    <ul>
+        <li><strong>RBAC (Role-Based Access Control)</strong> - Hak akses dikelola berdasarkan peran pengguna</li>
+        <li><strong>Attribute-Based Access Control</strong> - Akses ke data pasien dibatasi berdasarkan hubungan dokter-pasien</li>
+        <li><strong>IP Restriction</strong> - Batasan akses berdasarkan jaringan/IP (opsional)</li>
+        <li><strong>Multi-factor Authentication</strong> - Verifikasi dua faktor untuk akses administrator</li>
+    </ul>
+    
+    <h3>Data Protection</h3>
+    <ul>
+        <li><strong>Enkripsi Data Sensitif</strong> - Informasi personal yang sensitif dienkripsi di database</li>
+        <li><strong>Secure Communication</strong> - Seluruh komunikasi API menggunakan HTTPS dengan TLS 1.2+</li>
+        <li><strong>Input Validation</strong> - Validasi semua input pengguna untuk mencegah injeksi</li>
+        <li><strong>Output Sanitization</strong> - Mencegah serangan XSS dan data leakage</li>
+    </ul>
+    
+    <h2>7.2. Enkripsi</h2>
+    <p>
+        Sistem mengimplementasikan enkripsi di berbagai level:
+    </p>
+    
+    <h3>Database Encryption</h3>
+    <ul>
+        <li><strong>Column-level Encryption</strong> - Data sensitif seperti NIK dienkripsi menggunakan AES-256</li>
+        <li><strong>Data at Rest</strong> - Seluruh volume database dapat dienkripsi (tergantung konfigurasi server)</li>
+        <li><strong>Backup Encryption</strong> - Backup database dienkripsi sebelum disimpan</li>
+    </ul>
+    
+    <h3>Transit Encryption</h3>
+    <ul>
+        <li><strong>TLS/SSL</strong> - Semua komunikasi client-server dan antar-service dienkripsi</li>
+        <li><strong>API Security</strong> - Access token dienkripsi dan ditandatangani secara digital</li>
+    </ul>
+    
+    <h2>7.3. Audit Trail</h2>
+    <p>
+        SIMRS mencatat semua aktivitas pengguna dan perubahan data dalam sistem audit yang komprehensif:
+    </p>
+    <ul>
+        <li><strong>User Activity Logging</strong> - Login, logout, dan upaya akses yang gagal</li>
+        <li><strong>Data Access Logging</strong> - Pencatatan semua akses ke data pasien</li>
+        <li><strong>Change Tracking</strong> - Pelacakan perubahan data (siapa, kapan, apa yang diubah)</li>
+        <li><strong>System Event Logging</strong> - Pencatatan peristiwa sistem penting seperti backup, restore, dan konfigurasi</li>
+    </ul>
+    
+    <p>
+        Log audit disimpan dalam format terstruktur dan dapat diekspor untuk pemeriksaan kepatuhan:
+    </p>
+    
+    <pre><code>{
+  "timestamp": "2023-04-10T09:15:30Z",
+  "userId": 5,
+  "username": "dr.budi",
+  "action": "VIEW_RECORD",
+  "resourceType": "RekamMedis",
+  "resourceId": 123,
+  "patientId": 45,
+  "ipAddress": "192.168.1.100",
+  "userAgent": "Mozilla/5.0 ...",
+  "details": {
+    "reason": "Pemeriksaan rutin"
+  }
+}</code></pre>
+    
+    <h2>7.4. Backup dan Recovery</h2>
+    <p>
+        Sistem implementasi backup dan recovery yang komprehensif:
+    </p>
+    
+    <h3>Strategi Backup</h3>
+    <ul>
+        <li><strong>Full Backup</strong> - Backup lengkap database dilakukan setiap hari pada waktu rendah aktivitas</li>
+        <li><strong>Incremental Backup</strong> - Backup perubahan dilakukan setiap jam</li>
+        <li><strong>Transaction Log Backup</strong> - Backup log transaksi setiap 15 menit</li>
+        <li><strong>Offsite Storage</strong> - Backup diduplikasi dan disimpan di lokasi fisik yang terpisah</li>
+    </ul>
+    
+    <h3>Prosedur Recovery</h3>
+    <ol>
+        <li><strong>Disaster Recovery Plan</strong> - Dokumen terperinci untuk pemulihan dari berbagai skenario</li>
+        <li><strong>Recovery Testing</strong> - Pengujian prosedur pemulihan secara berkala (minimal per kuartal)</li>
+        <li><strong>Point-in-Time Recovery</strong> - Kemampuan memulihkan database ke titik waktu tertentu</li>
+    </ol>
+    
+    <div class="page-break"></div>
+    
+    <h1>11. TROUBLESHOOTING</h1>
+    
+    <h2>11.1. Error Umum</h2>
+    <table>
+        <tr>
+            <th>Error Code</th>
+            <th>Deskripsi</th>
+            <th>Kemungkinan Penyebab</th>
+            <th>Solusi</th>
+        </tr>
+        <tr>
+            <td>AUTH_001</td>
+            <td>Login gagal</td>
+            <td>Username/password salah, akun dinonaktifkan</td>
+            <td>Verifikasi kredensial, periksa status akun di database</td>
+        </tr>
+        <tr>
+            <td>AUTH_002</td>
+            <td>Token tidak valid</td>
+            <td>Token kedaluwarsa, token tidak sah</td>
+            <td>Bersihkan cookies browser, login ulang</td>
+        </tr>
+        <tr>
+            <td>DB_001</td>
+            <td>Database connection error</td>
+            <td>PostgreSQL tidak berjalan, konfigurasi salah</td>
+            <td>Periksa status database, periksa file konfigurasi</td>
+        </tr>
+        <tr>
+            <td>API_001</td>
+            <td>API rate limit exceeded</td>
+            <td>Terlalu banyak permintaan dari IP/user yang sama</td>
+            <td>Implementasikan batching atau throttling pada client</td>
+        </tr>
+        <tr>
+            <td>FHIR_001</td>
+            <td>Validasi FHIR gagal</td>
+            <td>Format resource FHIR tidak valid</td>
+            <td>Periksa log validasi, sesuaikan mapper</td>
+        </tr>
+        <tr>
+            <td>FHIR_002</td>
+            <td>OAuth authentication failed</td>
+            <td>Client ID/secret tidak valid, token kedaluwarsa</td>
+            <td>Verifikasi kredensial Satu Sehat, perbarui token</td>
+        </tr>
+    </table>
+    
+    <h2>11.2. Masalah Database</h2>
+    <ol>
+        <li>
+            <strong>Performance Issue:</strong> Query lambat
+            <ul>
+                <li><strong>Diagnosis:</strong> Periksa execution plan dengan <code>EXPLAIN ANALYZE</code></li>
+                <li><strong>Solusi:</strong> Tambahkan indeks, optimalkan query, tingkatkan hardware jika perlu</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Connection Pool Exhaustion</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Periksa <code>pg_stat_activity</code> untuk koneksi aktif</li>
+                <li><strong>Solusi:</strong> Atur ulang parameter pool, tingkatkan batas koneksi, periksa kebocoran koneksi</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Data Integrity Issue</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Jalankan validasi data, periksa log untuk error transaksi</li>
+                <li><strong>Solusi:</strong> Pulihkan dari backup, perbaiki data yang rusak</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h2>11.3. Masalah Integrasi</h2>
+    <ol>
+        <li>
+            <strong>FHIR Validation Errors</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Periksa detail validasi di log</li>
+                <li><strong>Solusi:</strong> Perbaiki mapper FHIR sesuai profil Satu Sehat</li>
+            </ul>
+        </li>
+        <li>
+            <strong>OAuth Authentication Issues</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Periksa response code dan pesan dari server OAuth</li>
+                <li><strong>Solusi:</strong> Perbarui client credentials, periksa format permintaan token</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Data Sync Failures</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Periksa log sinkronisasi untuk error spesifik</li>
+                <li><strong>Solusi:</strong> Implementasikan retry mechanism, perbaiki data yang gagal, hubungi support Satu Sehat jika perlu</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h2>11.4. Masalah Performa</h2>
+    <ol>
+        <li>
+            <strong>Frontend Slow Loading</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Gunakan browser developer tools untuk profiling</li>
+                <li><strong>Solusi:</strong> Optimalkan bundle size, implementasikan code splitting, gunakan lazy loading</li>
+            </ul>
+        </li>
+        <li>
+            <strong>API Response Time</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Gunakan monitoring tools untuk mengidentifikasi bottleneck</li>
+                <li><strong>Solusi:</strong> Implementasikan caching, optimalkan query database, skalakan layanan</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Memory Leaks</strong>
+            <ul>
+                <li><strong>Diagnosis:</strong> Monitor penggunaan memori, gunakan profiling tools</li>
+                <li><strong>Solusi:</strong> Perbaiki kebocoran memori di kode, restart service secara terjadwal jika perlu</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <div class="page-break"></div>
+    
+    <h1>13. REFERENSI</h1>
+    
+    <h2>Dokumentasi Teknologi</h2>
+    <ul>
+        <li><a href="https://reactjs.org/">React Documentation</a></li>
+        <li><a href="https://www.typescriptlang.org/docs/">TypeScript Documentation</a></li>
+        <li><a href="https://expressjs.com/">Express.js Documentation</a></li>
+        <li><a href="https://orm.drizzle.team/">Drizzle ORM Documentation</a></li>
+        <li><a href="https://www.postgresql.org/docs/">PostgreSQL Documentation</a></li>
+        <li><a href="https://tanstack.com/query/latest">TanStack Query Documentation</a></li>
+    </ul>
+    
+    <h2>Dokumentasi FHIR dan Satu Sehat</h2>
+    <ul>
+        <li><a href="https://hl7.org/fhir/">HL7 FHIR R4 Documentation</a></li>
+        <li><a href="https://satusehat.kemkes.go.id/platform/docs">Satu Sehat Developer Documentation</a></li>
+        <li><a href="https://www.hl7.org/fhir/profiling.html">FHIR Profiling Guide</a></li>
+    </ul>
+    
+    <h2>Standar dan Regulasi</h2>
+    <ul>
+        <li>Permenkes No. 24 Tahun 2022 tentang Rekam Medis</li>
+        <li>UU No. 29 Tahun 2004 tentang Praktik Kedokteran</li>
+        <li>PP No. 46 Tahun 2014 tentang Sistem Informasi Kesehatan</li>
+        <li>Permenkes No. 82 Tahun 2013 tentang SIMRS</li>
+    </ul>
+    
+    <div class="footer">
+        <p>SIMRS Technical Manual | Versi 1.0 | &copy; Powered by PT Cloud System Indonesia</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMRS - User Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Nunito', sans-serif;
+            color: #0070f3;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            font-size: 28px;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #0070f3;
+            font-size: 24px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            color: #0070f3;
+            font-size: 20px;
+        }
+        
+        p {
+            margin-bottom: 1em;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .toc {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .toc ul ul {
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .note {
+            background-color: #fff4e5;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tip {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .centered {
+            text-align: center;
+        }
+        
+        .logo {
+            margin: 20px auto;
+            display: block;
+            width: 150px;
+            border: none;
+            box-shadow: none;
+        }
+        
+        ol, ul {
+            padding-left: 25px;
+        }
+        
+        .cover {
+            height: 240mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .cover h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            border: none;
+        }
+        
+        .cover h2 {
+            font-size: 24px;
+            color: #555;
+            margin-top: 0;
+            font-weight: 400;
+            border: none;
+        }
+        
+        .cover .version {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .feature-list {
+            margin-left: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eaeaea;
+            padding-top: 10px;
+        }
+        
+        .role-description {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #0070f3;
+        }
+        
+        .step {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .step:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #0070f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>SISTEM INFORMASI MANAJEMEN RUMAH SAKIT</h1>
+        <h2>PANDUAN PENGGUNA</h2>
+        <p>Dengan Integrasi Satu Sehat FHIR</p>
+        <p class="version">Versi 1.0 - April 2023</p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>DAFTAR ISI</h1>
+    <div class="toc">
+        <ul>
+            <li>1. Pendahuluan
+                <ul>
+                    <li>1.1. Tentang SIMRS</li>
+                    <li>1.2. Fitur Utama</li>
+                    <li>1.3. Integrasi Satu Sehat</li>
+                </ul>
+            </li>
+            <li>2. Memulai
+                <ul>
+                    <li>2.1. Persyaratan Sistem</li>
+                    <li>2.2. Login</li>
+                    <li>2.3. Dashboard</li>
+                    <li>2.4. Profil Pengguna</li>
+                </ul>
+            </li>
+            <li>3. Manajemen Pasien
+                <ul>
+                    <li>3.1. Pendaftaran Pasien Baru</li>
+                    <li>3.2. Pencarian Data Pasien</li>
+                    <li>3.3. Edit Data Pasien</li>
+                    <li>3.4. Sinkronisasi Data Dengan Satu Sehat</li>
+                </ul>
+            </li>
+            <li>4. Jadwal & Antrian
+                <ul>
+                    <li>4.1. Membuat Jadwal Kunjungan</li>
+                    <li>4.2. Mengelola Jadwal Dokter</li>
+                    <li>4.3. Sistem Antrian</li>
+                </ul>
+            </li>
+            <li>5. Rekam Medis
+                <ul>
+                    <li>5.1. Membuat Rekam Medis Baru</li>
+                    <li>5.2. Mencari Riwayat Rekam Medis</li>
+                    <li>5.3. Template SOAP</li>
+                    <li>5.4. Sinkronisasi dengan Satu Sehat</li>
+                </ul>
+            </li>
+            <li>6. Rawat Jalan
+                <ul>
+                    <li>6.1. Alur Pemeriksaan</li>
+                    <li>6.2. Anamnesis dan Pemeriksaan</li>
+                    <li>6.3. Diagnosa dan Tindakan</li>
+                </ul>
+            </li>
+            <li>7. Rawat Inap
+                <ul>
+                    <li>7.1. Registrasi Rawat Inap</li>
+                    <li>7.2. Manajemen Kamar dan Bed</li>
+                    <li>7.3. Catatan Perawat</li>
+                    <li>7.4. Proses Pemulangan</li>
+                </ul>
+            </li>
+            <li>8. Farmasi
+                <ul>
+                    <li>8.1. Pengelolaan Obat</li>
+                    <li>8.2. Pembuatan Resep</li>
+                    <li>8.3. Inventaris Obat</li>
+                </ul>
+            </li>
+            <li>9. Laboratorium
+                <ul>
+                    <li>9.1. Permintaan Pemeriksaan</li>
+                    <li>9.2. Input Hasil Lab</li>
+                    <li>9.3. Laporan dan Validasi</li>
+                </ul>
+            </li>
+            <li>10. Radiologi
+                <ul>
+                    <li>10.1. Permintaan Pemeriksaan</li>
+                    <li>10.2. Upload dan Melihat Hasil</li>
+                    <li>10.3. Interpretasi dan Laporan</li>
+                </ul>
+            </li>
+            <li>11. Laporan
+                <ul>
+                    <li>11.1. Laporan Kunjungan</li>
+                    <li>11.2. Laporan Keuangan</li>
+                    <li>11.3. Laporan Medis</li>
+                    <li>11.4. Ekspor Data</li>
+                </ul>
+            </li>
+            <li>12. Pengaturan
+                <ul>
+                    <li>12.1. Manajemen Pengguna</li>
+                    <li>12.2. Konfigurasi Rumah Sakit</li>
+                    <li>12.3. Sinkronisasi Satu Sehat</li>
+                </ul>
+            </li>
+            <li>13. Integrasi Satu Sehat
+                <ul>
+                    <li>13.1. Konsep FHIR</li>
+                    <li>13.2. Konfigurasi API Satu Sehat</li>
+                    <li>13.3. Status Sinkronisasi</li>
+                </ul>
+            </li>
+            <li>14. Peran dan Hak Akses
+                <ul>
+                    <li>14.1. Admin</li>
+                    <li>14.2. Dokter</li>
+                    <li>14.3. Perawat</li>
+                    <li>14.4. Apoteker</li>
+                    <li>14.5. Staff</li>
+                </ul>
+            </li>
+            <li>15. Pemecahan Masalah</li>
+            <li>16. FAQ</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>1. PENDAHULUAN</h1>
+    
+    <h2>1.1. Tentang SIMRS</h2>
+    <p>
+        Sistem Informasi Manajemen Rumah Sakit (SIMRS) adalah aplikasi terintegrasi yang dirancang untuk mengelola
+        berbagai aspek operasional dan administrasi rumah sakit. Sistem ini menyatukan berbagai proses dalam satu
+        platform terpadu untuk meningkatkan efisiensi pelayanan kesehatan.
+    </p>
+    <p>
+        SIMRS ini mendukung kebutuhan pengelolaan data rumah sakit sekaligus mengintegrasikan dengan sistem
+        Satu Sehat nasional, memungkinkan berbagi data kesehatan secara aman dan terstandarisasi sesuai peraturan 
+        Kementerian Kesehatan Republik Indonesia.
+    </p>
+    
+    <h2>1.2. Fitur Utama</h2>
+    <ul class="feature-list">
+        <li><strong>Manajemen Pasien</strong> - Pendaftaran, pencarian, dan pengelolaan data pasien.</li>
+        <li><strong>Jadwal & Antrian</strong> - Membuat jadwal kunjungan dan mengelola antrian pasien.</li>
+        <li><strong>Rekam Medis Elektronik</strong> - Pencatatan lengkap riwayat kesehatan pasien.</li>
+        <li><strong>Rawat Jalan</strong> - Pengelolaan layanan poliklinik dan konsultasi.</li>
+        <li><strong>Rawat Inap</strong> - Manajemen kamar, bed dan perawatan inap.</li>
+        <li><strong>Farmasi</strong> - Pengelolaan obat dan resep.</li>
+        <li><strong>Laboratorium</strong> - Manajemen pemeriksaan dan hasil laboratorium.</li>
+        <li><strong>Radiologi</strong> - Pengaturan pemeriksaan radiologi dan penyimpanan citra.</li>
+        <li><strong>Laporan</strong> - Berbagai laporan kunjungan, medis, dan administrasi.</li>
+        <li><strong>Integrasi Satu Sehat</strong> - Sinkronisasi data dengan platform kesehatan nasional.</li>
+    </ul>
+    
+    <h2>1.3. Integrasi Satu Sehat</h2>
+    <p>
+        SIMRS terintegrasi dengan platform Satu Sehat yang diinisiasi oleh Kementerian Kesehatan Republik Indonesia.
+        Integrasi ini memungkinkan pertukaran data kesehatan antar fasilitas kesehatan secara nasional dengan
+        standar FHIR (Fast Healthcare Interoperability Resources).
+    </p>
+    <p>
+        Beberapa manfaat integrasi Satu Sehat:
+    </p>
+    <ul>
+        <li>Akses riwayat kesehatan pasien dari fasilitas kesehatan lain</li>
+        <li>Pelaporan otomatis ke Kementerian Kesehatan</li>
+        <li>Standardisasi data kesehatan nasional</li>
+        <li>Mengurangi duplikasi pemeriksaan dan meningkatkan efisiensi pelayanan</li>
+        <li>Meningkatkan kualitas perawatan dengan akses ke riwayat kesehatan lengkap</li>
+    </ul>
+    
+    <div class="page-break"></div>
+    
+    <h1>2. MEMULAI</h1>
+    
+    <h2>2.1. Persyaratan Sistem</h2>
+    <p>
+        Untuk menggunakan SIMRS dengan optimal, pastikan perangkat anda memenuhi persyaratan berikut:
+    </p>
+    <ul>
+        <li><strong>Browser:</strong> Google Chrome 80+, Firefox 75+, Safari 13+, atau Microsoft Edge 80+</li>
+        <li><strong>Koneksi Internet:</strong> Minimum 1 Mbps</li>
+        <li><strong>Resolusi Layar:</strong> Minimum 1366 x 768</li>
+        <li><strong>Perangkat Keras:</strong> Komputer/Laptop dengan RAM minimal 4GB</li>
+        <li><strong>Printer:</strong> Untuk mencetak resep, laporan, dan dokumen lainnya</li>
+        <li><strong>Scanner (opsional):</strong> Untuk memindai dokumen identitas pasien</li>
+    </ul>
+    
+    <h2>2.2. Login</h2>
+    <p>
+        Untuk mengakses SIMRS, ikuti langkah-langkah berikut:
+    </p>
+    <ol>
+        <li>Buka aplikasi SIMRS melalui browser anda</li>
+        <li>Masukkan username dan password yang telah diberikan oleh administrator</li>
+        <li>Klik tombol "Masuk"</li>
+    </ol>
+    <p class="note">
+        <strong>Catatan:</strong> Jika anda lupa password, hubungi administrator sistem anda untuk reset password.
+        Untuk kenyamanan, jangan membagikan kredensial login anda dengan siapapun.
+    </p>
+    
+    <h2>2.3. Dashboard</h2>
+    <p>
+        Setelah berhasil login, anda akan diarahkan ke dashboard utama yang menampilkan informasi penting dan akses
+        cepat ke berbagai fitur. Dashboard menampilkan:
+    </p>
+    <ul>
+        <li><strong>Ringkasan Hari Ini</strong> - Jumlah kunjungan, pasien baru, dan jadwal hari ini</li>
+        <li><strong>Aktivitas Terbaru</strong> - Daftar aktivitas dalam sistem oleh pengguna</li>
+        <li><strong>Status Sinkronisasi Satu Sehat</strong> - Status terkini sinkronisasi data</li>
+        <li><strong>Jadwal Hari Ini</strong> - Jadwal kunjungan dan dokter hari ini</li>
+        <li><strong>Menu Navigasi</strong> - Akses cepat ke semua modul sistem</li>
+    </ul>
+    
+    <h2>2.4. Profil Pengguna</h2>
+    <p>
+        Untuk mengakses dan mengelola profil pengguna anda:
+    </p>
+    <ol>
+        <li>Klik ikon profil di sudut kanan atas layar</li>
+        <li>Pilih "Profil Saya" untuk melihat informasi profil anda</li>
+        <li>Anda dapat mengubah informasi dasar dan password dari halaman ini</li>
+    </ol>
+    <p class="tip">
+        <strong>Tip:</strong> Sebaiknya ubah password default anda saat pertama kali login untuk keamanan akun yang lebih baik.
+    </p>
+    
+    <div class="page-break"></div>
+    
+    <h1>3. MANAJEMEN PASIEN</h1>
+    
+    <h2>3.1. Pendaftaran Pasien Baru</h2>
+    <p>
+        Untuk mendaftarkan pasien baru dalam sistem:
+    </p>
+    <ol>
+        <li>Klik menu "Pasien" di sidebar atau "Pendaftaran Pasien Baru" di dashboard</li>
+        <li>Pilih "Tambah Pasien Baru"</li>
+        <li>Isi formulir data pasien dengan lengkap:
+            <ul>
+                <li>Data identitas (Nama, NIK, Tanggal Lahir, dll)</li>
+                <li>Informasi kontak (Alamat, No. Telepon, Email)</li>
+                <li>Informasi tambahan (Golongan Darah, Riwayat Alergi)</li>
+            </ul>
+        </li>
+        <li>Klik "Simpan" untuk mendaftarkan pasien</li>
+    </ol>
+    <p class="note">
+        <strong>Catatan:</strong> Sistem akan otomatis memeriksa NIK dan data yang sudah ada untuk mencegah duplikasi data pasien.
+    </p>
+    
+    <h2>3.2. Pencarian Data Pasien</h2>
+    <p>
+        Untuk mencari data pasien yang sudah terdaftar:
+    </p>
+    <ol>
+        <li>Klik menu "Pasien" di sidebar</li>
+        <li>Gunakan kotak pencarian di bagian atas halaman</li>
+        <li>Masukkan informasi pencarian (Nama, NIK, Nomor RM, atau No. Telepon)</li>
+        <li>Sistem akan menampilkan hasil pencarian secara otomatis</li>
+    </ol>
+    <p class="tip">
+        <strong>Tip:</strong> Untuk pencarian yang lebih spesifik, gunakan pencarian lanjutan dengan menekan tombol "Pencarian Lanjutan"
+        untuk memfilter berdasarkan berbagai parameter seperti usia, jenis kelamin, atau tanggal kunjungan terakhir.
+    </p>
+    
+    <h2>3.3. Edit Data Pasien</h2>
+    <p>
+        Untuk mengubah data pasien:
+    </p>
+    <ol>
+        <li>Cari pasien menggunakan fitur pencarian</li>
+        <li>Klik nama pasien untuk melihat detail</li>
+        <li>Klik tombol "Edit" di bagian atas halaman detail pasien</li>
+        <li>Ubah informasi yang diperlukan</li>
+        <li>Klik "Simpan Perubahan"</li>
+    </ol>
+    <p class="note">
+        <strong>Catatan:</strong> Beberapa informasi dasar seperti NIK dan Nomor RM tidak dapat diubah setelah
+        diverifikasi untuk menjaga integritas data. Jika perlu perubahan pada data tersebut, hubungi administrator sistem.
+    </p>
+    
+    <h2>3.4. Sinkronisasi Data Dengan Satu Sehat</h2>
+    <p>
+        Untuk menyinkronkan data pasien dengan Satu Sehat:
+    </p>
+    <ol>
+        <li>Buka halaman detail pasien</li>
+        <li>Klik tombol "Sinkronisasi Satu Sehat" di bagian atas halaman</li>
+        <li>Sistem akan melakukan verifikasi data dan sinkronisasi</li>
+        <li>Status sinkronisasi akan ditampilkan setelah proses selesai</li>
+    </ol>
+    <p class="warning">
+        <strong>Penting:</strong> Pastikan data pasien telah lengkap dan akurat sebelum melakukan sinkronisasi.
+        Data yang tidak lengkap dapat menyebabkan kegagalan sinkronisasi dengan platform Satu Sehat.
+    </p>
+    
+    <div class="page-break"></div>
+    
+    <h1>4. JADWAL & ANTRIAN</h1>
+    
+    <h2>4.1. Membuat Jadwal Kunjungan</h2>
+    <p>
+        Untuk membuat jadwal kunjungan baru bagi pasien:
+    </p>
+    <ol>
+        <li>Klik menu "Jadwal" di sidebar</li>
+        <li>Pilih "Buat Jadwal Baru"</li>
+        <li>Pilih pasien dari daftar atau gunakan fitur pencarian</li>
+        <li>Tentukan tanggal dan waktu kunjungan</li>
+        <li>Pilih dokter dan poli/layanan yang dituju</li>
+        <li>Tambahkan catatan jika diperlukan</li>
+        <li>Klik "Simpan Jadwal"</li>
+    </ol>
+    <p class="tip">
+        <strong>Tip:</strong> Jadwal otomatis akan muncul di dashboard dokter yang dipilih, dan pasien akan otomatis
+        masuk ke dalam daftar antrian pada hari dan poli yang dipilih.
+    </p>
+    
+    <h2>4.2. Mengelola Jadwal Dokter</h2>
+    <p>
+        Untuk mengelola jadwal praktik dokter:
+    </p>
+    <ol>
+        <li>Klik menu "Jadwal" di sidebar</li>
+        <li>Pilih tab "Jadwal Dokter"</li>
+        <li>Pilih dokter dari daftar dropdown</li>
+        <li>Sistem akan menampilkan jadwal praktik dokter dalam format kalender</li>
+        <li>Untuk menambah jadwal praktik, klik tombol "Tambah Jadwal Praktik"</li>
+        <li>Tentukan hari, jam mulai dan jam selesai, serta poli</li>
+        <li>Klik "Simpan"</li>
+    </ol>
+    <p class="note">
+        <strong>Catatan:</strong> Perubahan jadwal praktik akan otomatis diperbarui di sistem antrian dan
+        akan terlihat oleh pasien saat membuat janji kunjungan baru.
+    </p>
+    
+    <h2>4.3. Sistem Antrian</h2>
+    <p>
+        Untuk mengelola antrian pasien:
+    </p>
+    <ol>
+        <li>Klik menu "Jadwal" di sidebar</li>
+        <li>Pilih tab "Antrian Hari Ini"</li>
+        <li>Sistem akan menampilkan daftar antrian untuk semua poli hari ini</li>
+        <li>Pilih poli spesifik dari filter untuk melihat antrian per poli</li>
+        <li>Klik tombol "Panggil" untuk memanggil pasien berikutnya</li>
+        <li>Klik tombol "Selesai" setelah pasien selesai dilayani</li>
+    </ol>
+    <p class="tip">
+        <strong>Tip:</strong> Sistem antrian terintegrasi dengan display antrian yang dapat ditampilkan di 
+        ruang tunggu menggunakan monitor terpisah. Untuk mengaktifkan tampilan ini, pilih menu 
+        "Tampilkan Antrian" dari panel admin.
+    </p>
+    
+    <div class="page-break"></div>
+    
+    <h1>14. PERAN DAN HAK AKSES</h1>
+    
+    <p>
+        SIMRS menggunakan sistem peran (role) untuk mengelola hak akses pengguna. Setiap peran memiliki
+        hak akses yang berbeda sesuai dengan tanggung jawab dalam rumah sakit.
+    </p>
+    
+    <h2>14.1. Admin</h2>
+    <div class="role-description">
+        <p><strong>Deskripsi:</strong> Administrator sistem memiliki akses penuh ke seluruh sistem dan bertanggung jawab
+        untuk konfigurasi dan pemeliharaan sistem.</p>
+        <p><strong>Hak Akses:</strong></p>
+        <ul>
+            <li>Manajemen pengguna (membuat, mengedit, menghapus akun)</li>
+            <li>Konfigurasi sistem</li>
+            <li>Pengaturan Satu Sehat</li>
+            <li>Akses ke semua data dan laporan</li>
+            <li>Manajemen master data (obat, ruangan, dll)</li>
+        </ul>
+    </div>
+    
+    <h2>14.2. Dokter</h2>
+    <div class="role-description">
+        <p><strong>Deskripsi:</strong> Dokter dapat mengakses dan mengelola rekam medis pasien, membuat resep, 
+        dan melihat hasil pemeriksaan.</p>
+        <p><strong>Hak Akses:</strong></p>
+        <ul>
+            <li>Melihat dan mengedit rekam medis pasien</li>
+            <li>Membuat diagnosis, rencana perawatan, dan resep</li>
+            <li>Melihat hasil laboratorium dan radiologi</li>
+            <li>Mengakses jadwal praktik pribadi</li>
+            <li>Melihat riwayat pasien yang ditangani</li>
+        </ul>
+    </div>
+    
+    <h2>14.3. Perawat</h2>
+    <div class="role-description">
+        <p><strong>Deskripsi:</strong> Perawat dapat mencatat tanda vital, melakukan pengkajian awal pasien, 
+        dan mengelola perawatan harian pasien.</p>
+        <p><strong>Hak Akses:</strong></p>
+        <ul>
+            <li>Input data awal pemeriksaan (tanda vital, keluhan)</li>
+            <li>Mengakses dan menambahkan catatan perawatan</li>
+            <li>Melihat jadwal pemberian obat</li>
+            <li>Mencatat implementasi perawatan pada pasien rawat inap</li>
+            <li>Akses terbatas ke rekam medis pasien</li>
+        </ul>
+    </div>
+    
+    <h2>14.4. Apoteker</h2>
+    <div class="role-description">
+        <p><strong>Deskripsi:</strong> Apoteker mengelola inventaris obat, memproses resep, dan 
+        memberikan informasi penggunaan obat.</p>
+        <p><strong>Hak Akses:</strong></p>
+        <ul>
+            <li>Akses ke modul farmasi</li>
+            <li>Mengelola inventaris obat</li>
+            <li>Melihat dan memproses resep</li>
+            <li>Membuat laporan penggunaan obat</li>
+            <li>Akses terbatas ke data pasien terkait pengobatan</li>
+        </ul>
+    </div>
+    
+    <h2>14.5. Staff</h2>
+    <div class="role-description">
+        <p><strong>Deskripsi:</strong> Staff administrasi mengelola pendaftaran pasien, jadwal, dan administrasi umum.</p>
+        <p><strong>Hak Akses:</strong></p>
+        <ul>
+            <li>Pendaftaran pasien baru</li>
+            <li>Pencarian data pasien</li>
+            <li>Pembuatan dan pengelolaan janji kunjungan</li>
+            <li>Menyiapkan laporan administratif</li>
+            <li>Mengelola antrian</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>15. PEMECAHAN MASALAH</h1>
+    
+    <p>
+        Bagian ini membahas masalah umum yang mungkin anda temui saat menggunakan SIMRS dan
+        langkah-langkah untuk menyelesaikannya.
+    </p>
+    
+    <h3>1. Masalah Login</h3>
+    <div class="step">
+        <p><strong>Masalah:</strong> Tidak dapat login ke sistem</p>
+        <p><strong>Solusi:</strong></p>
+        <ul>
+            <li>Pastikan username dan password sudah benar</li>
+            <li>Periksa tombol Caps Lock pada keyboard anda</li>
+            <li>Bersihkan cache browser dan coba lagi</li>
+            <li>Jika masih gagal, hubungi administrator untuk reset password</li>
+        </ul>
+    </div>
+    
+    <h3>2. Sistem Berjalan Lambat</h3>
+    <div class="step">
+        <p><strong>Masalah:</strong> Sistem terasa lambat saat diakses</p>
+        <p><strong>Solusi:</strong></p>
+        <ul>
+            <li>Tutup tab browser yang tidak digunakan</li>
+            <li>Bersihkan cache browser</li>
+            <li>Pastikan koneksi internet stabil</li>
+            <li>Periksa apakah komputer memenuhi persyaratan sistem minimum</li>
+            <li>Jika masalah berlanjut, laporkan ke tim IT</li>
+        </ul>
+    </div>
+    
+    <h3>3. Gagal Sinkronisasi dengan Satu Sehat</h3>
+    <div class="step">
+        <p><strong>Masalah:</strong> Data tidak dapat disinkronkan dengan Satu Sehat</p>
+        <p><strong>Solusi:</strong></p>
+        <ul>
+            <li>Pastikan data pasien lengkap dan valid</li>
+            <li>Verifikasi konfigurasi API Satu Sehat di menu Pengaturan</li>
+            <li>Periksa status koneksi internet</li>
+            <li>Cek log error di menu Pengaturan > Log Sinkronisasi</li>
+            <li>Jika terus gagal, hubungi administrator sistem atau support Satu Sehat</li>
+        </ul>
+    </div>
+    
+    <h3>4. Printer Tidak Berfungsi</h3>
+    <div class="step">
+        <p><strong>Masalah:</strong> Tidak dapat mencetak dokumen dari sistem</p>
+        <p><strong>Solusi:</strong></p>
+        <ul>
+            <li>Periksa koneksi printer</li>
+            <li>Pastikan printer terpilih sebagai printer default</li>
+            <li>Pastikan printer memiliki kertas dan tinta</li>
+            <li>Coba cetak ke PDF terlebih dahulu, kemudian cetak PDF tersebut</li>
+            <li>Restart browser dan coba lagi</li>
+        </ul>
+    </div>
+    
+    <h3>5. Data Tidak Tersimpan</h3>
+    <div class="step">
+        <p><strong>Masalah:</strong> Data yang diinput tidak tersimpan</p>
+        <p><strong>Solusi:</strong></p>
+        <ul>
+            <li>Pastikan semua field wajib sudah diisi</li>
+            <li>Periksa format input (tanggal, nomor, dsb)</li>
+            <li>Pastikan anda menekan tombol "Simpan" setelah selesai</li>
+            <li>Cek koneksi internet</li>
+            <li>Jika masalah berlanjut, coba akses dari browser berbeda</li>
+        </ul>
+    </div>
+    
+    <p class="note">
+        <strong>Catatan:</strong> Jika anda mengalami masalah yang tidak tercantum di sini, silakan hubungi
+        tim support melalui menu "Bantuan" atau email ke support@simrs.co.id dengan menyertakan screenshot
+        dan deskripsi masalah secara detail.
+    </p>
+    
+    <div class="page-break"></div>
+    
+    <h1>16. FAQ (PERTANYAAN UMUM)</h1>
+    
+    <h3>1. Apakah saya perlu menginstal aplikasi khusus untuk menggunakan SIMRS?</h3>
+    <p>
+        Tidak, SIMRS adalah aplikasi berbasis web yang dapat diakses melalui browser internet. Anda hanya
+        perlu menggunakan browser yang didukung seperti Chrome, Firefox, Safari, atau Edge versi terbaru.
+    </p>
+    
+    <h3>2. Bagaimana cara menghubungkan SIMRS dengan Satu Sehat?</h3>
+    <p>
+        Konfigurasi koneksi Satu Sehat dilakukan oleh administrator sistem. Rumah sakit perlu memiliki
+        Client ID dan Client Secret resmi dari Kementerian Kesehatan yang diinput pada menu
+        Pengaturan > Integrasi Satu Sehat.
+    </p>
+    
+    <h3>3. Apakah data pasien aman di SIMRS?</h3>
+    <p>
+        Ya, SIMRS mengimplementasikan standar keamanan tinggi dengan enkripsi data, autentikasi 
+        multi-level, dan audit log untuk melacak semua aktivitas pengguna. Semua data disimpan 
+        sesuai dengan peraturan perlindungan data kesehatan yang berlaku.
+    </p>
+    
+    <h3>4. Bagaimana jika internet terputus saat menggunakan SIMRS?</h3>
+    <p>
+        SIMRS memiliki fitur penyimpanan sementara yang akan menyimpan data anda secara lokal saat
+        internet terputus. Setelah koneksi dipulihkan, data akan disinkronkan secara otomatis dengan
+        server. Namun, beberapa fungsi seperti pencarian data pasien mungkin tidak tersedia saat offline.
+    </p>
+    
+    <h3>5. Dapatkah SIMRS terintegrasi dengan sistem lain di rumah sakit?</h3>
+    <p>
+        Ya, SIMRS mendukung integrasi dengan sistem lain seperti mesin laboratorium, PACS untuk radiologi,
+        sistem BPJS, dan sistem keuangan melalui API. Untuk integrasi khusus, silakan hubungi tim
+        implementasi SIMRS.
+    </p>
+    
+    <h3>6. Berapa lama waktu yang dibutuhkan untuk terbiasa menggunakan SIMRS?</h3>
+    <p>
+        Rata-rata pengguna dapat memahami fungsi dasar dalam 1-2 hari. Penguasaan penuh terhadap
+        semua fitur biasanya membutuhkan waktu sekitar 1-2 minggu, tergantung pada intensitas
+        penggunaan dan peran pengguna dalam sistem.
+    </p>
+    
+    <h3>7. Apakah ada batasan jumlah pasien yang dapat dikelola dalam SIMRS?</h3>
+    <p>
+        Tidak ada batasan praktis untuk jumlah pasien. SIMRS dirancang untuk menangani volume data besar
+        dan terus dioptimalkan untuk kinerja yang baik bahkan dengan jutaan catatan pasien.
+    </p>
+    
+    <h3>8. Bagaimana cara mendapatkan laporan kustom yang tidak tersedia di menu laporan?</h3>
+    <p>
+        Untuk laporan kustom, anda dapat menggunakan fitur "Pembuat Laporan" di menu Laporan yang
+        memungkinkan penyesuaian parameter dan format. Untuk kebutuhan yang lebih kompleks,
+        hubungi tim support untuk pembuatan template laporan khusus.
+    </p>
+    
+    <div class="footer">
+        <p>SIMRS Versi 1.0 | Halaman Panduan Pengguna | &copy; 2023 Sistem Informasi Manajemen Rumah Sakit</p>
+    </div>
+</body>
+</html>
