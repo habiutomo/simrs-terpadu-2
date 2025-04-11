@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { NAV_LINKS } from "@/lib/constants";
-import { CURRENT_USER } from "@/lib/constants";
+import { NAV_LINKS, USER_DATA } from "@/lib/constants";
 
 interface SidebarProps {
   open: boolean;
@@ -39,27 +38,39 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   
   return (
     <aside 
-      className={`w-64 bg-[#0a192f] text-white fixed h-full z-10 md:relative transition-transform duration-300 ${
+      className={`w-64 bg-[#111827] text-white fixed h-full z-10 md:relative transition-transform duration-300 ${
         open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       }`}
     >
       <div className="flex flex-col h-full">
         {/* Logo */}
-        <div className="p-4 border-b border-gray-700">
+        <div className="p-4 border-b border-gray-800">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center">
-              <span className="text-[#0a192f] font-bold">RS</span>
+            <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold">RS</span>
             </div>
-            <div className="ml-2">
-              <h1 className="text-lg font-semibold text-white">SIMRS Terpadu</h1>
-              <p className="text-xs text-gray-400">Sistem Manajemen RS</p>
+            <div className="ml-3">
+              <h1 className="text-lg font-medium text-white">SIMRS Terpadu</h1>
+            </div>
+          </div>
+        </div>
+        
+        {/* User Info */}
+        <div className="px-4 py-3 border-b border-gray-800">
+          <div className="flex items-center">
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+              <span className="font-medium">A</span>
+            </div>
+            <div className="ml-3">
+              <p className="text-white text-sm font-medium">Administrator</p>
+              <p className="text-gray-400 text-xs">RSUD Harapan Bunda</p>
             </div>
           </div>
         </div>
         
         {/* Navigation Links */}
-        <nav className="flex-1 overflow-y-auto py-4">
-          <ul>
+        <nav className="flex-1 overflow-y-auto py-3">
+          <ul className="space-y-1 px-2">
             {mainLinks.map((link) => {
               // Find any child menus
               const childMenus = NAV_LINKS.filter(item => item.parent === link.href.substring(1));
@@ -67,66 +78,70 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
               const isExpanded = shouldExpandMenu(link.href.substring(1));
               
               return (
-                <li key={link.href} className="mb-1">
+                <li key={link.href}>
                   {hasChildren ? (
                     <div>
                       <button
-                        className={`w-full flex items-center justify-between px-4 py-3 hover:bg-[#172a46] text-gray-300 ${
+                        className={`w-full flex items-center justify-between px-3 py-2 text-white rounded-md ${
                           (isMenuActive(link.href) || isParentActive(link.href.substring(1))) 
-                            ? "sidebar-link active" 
-                            : ""
+                            ? "bg-gray-700" 
+                            : "hover:bg-gray-700"
                         }`}
                         onClick={() => toggleMenu(link.href.substring(1))}
                       >
                         <div className="flex items-center">
-                          <span className="material-icons text-sm mr-3">{link.icon}</span>
-                          <span className="font-medium tracking-wide">{link.label}</span>
+                          <span className="material-icons text-lg mr-3">{link.icon}</span>
+                          <span className="font-medium">{link.label}</span>
                         </div>
-                        <span className="material-icons text-xs">
-                          {isExpanded ? "expand_less" : "expand_more"}
-                        </span>
+                        {hasChildren && (
+                          <span className="material-icons text-sm">
+                            {isExpanded ? "expand_less" : "expand_more"}
+                          </span>
+                        )}
                       </button>
                       
                       {isExpanded && (
-                        <ul className="pl-10 bg-[#0c1e3a]">
+                        <ul className="mt-1 pl-8 space-y-1">
                           {childMenus.map(childItem => (
                             <li key={childItem.href}>
-                              <Link href={childItem.href}>
-                                <a 
-                                  className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] sidebar-menu-item ${
-                                    isMenuActive(childItem.href) ? "text-white font-medium" : ""
-                                  }`}
-                                  onClick={() => {
-                                    if (window.innerWidth < 768) {
-                                      setOpen(false);
-                                    }
-                                  }}
-                                >
-                                  <span className="material-icons text-xs mr-3">{childItem.icon}</span>
-                                  <span className="text-sm font-medium">{childItem.label}</span>
-                                </a>
-                              </Link>
+                              <div onClick={() => {
+                                if (window.innerWidth < 768) {
+                                  setOpen(false);
+                                }
+                              }}>
+                                <Link href={childItem.href}>
+                                  <div 
+                                    className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
+                                      isMenuActive(childItem.href) ? "bg-gray-700" : "hover:bg-gray-700"
+                                    }`}
+                                  >
+                                    <span className="material-icons text-sm mr-3">{childItem.icon}</span>
+                                    <span className="text-sm">{childItem.label}</span>
+                                  </div>
+                                </Link>
+                              </div>
                             </li>
                           ))}
                         </ul>
                       )}
                     </div>
                   ) : (
-                    <Link href={link.href}>
-                      <a 
-                        className={`flex items-center px-4 py-3 hover:bg-[#172a46] text-gray-300 sidebar-menu-item ${
-                          isMenuActive(link.href) ? "sidebar-link active" : ""
-                        }`}
-                        onClick={() => {
-                          if (window.innerWidth < 768) {
-                            setOpen(false);
-                          }
-                        }}
-                      >
-                        <span className="material-icons text-sm mr-3">{link.icon}</span>
-                        <span className="font-medium tracking-wide">{link.label}</span>
-                      </a>
-                    </Link>
+                    <div onClick={() => {
+                      if (window.innerWidth < 768) {
+                        setOpen(false);
+                      }
+                    }}>
+                      <Link href={link.href}>
+                        <div 
+                          className={`flex items-center px-3 py-2 rounded-md cursor-pointer ${
+                            isMenuActive(link.href) ? "bg-gray-700" : "hover:bg-gray-700"
+                          }`}
+                        >
+                          <span className="material-icons text-lg mr-3">{link.icon}</span>
+                          <span className="font-medium">{link.label}</span>
+                        </div>
+                      </Link>
+                    </div>
                   )}
                 </li>
               );
@@ -134,28 +149,35 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
           </ul>
         </nav>
         
+        {/* Border Line */}
+        <div className="mx-3 border-t border-gray-700 my-2"></div>
+        
         {/* Settings & Help */}
-        <div className="p-4 border-t border-gray-700">
-          <ul>
-            <li className="mb-1">
-              <Link href="/settings">
-                <a className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] ${
-                  location === "/settings" ? "text-white" : ""
-                }`}>
-                  <span className="material-icons text-sm mr-3">settings</span>
-                  <span className="font-medium tracking-wide">Pengaturan</span>
-                </a>
-              </Link>
+        <div className="px-2 pb-4">
+          <ul className="space-y-1">
+            <li>
+              <div>
+                <Link href="/bantuan">
+                  <div className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
+                    location === "/bantuan" ? "bg-gray-700" : "hover:bg-gray-700"
+                  }`}>
+                    <span className="material-icons text-lg mr-3">help_outline</span>
+                    <span className="font-medium">Bantuan</span>
+                  </div>
+                </Link>
+              </div>
             </li>
             <li>
-              <Link href="/bantuan">
-                <a className={`flex items-center px-4 py-2 text-gray-300 hover:bg-[#172a46] ${
-                  location === "/bantuan" ? "text-white" : ""
-                }`}>
-                  <span className="material-icons text-sm mr-3">help</span>
-                  <span className="font-medium tracking-wide">Bantuan</span>
-                </a>
-              </Link>
+              <div>
+                <Link href="/logout">
+                  <div className={`flex items-center px-3 py-2 text-white rounded-md cursor-pointer ${
+                    location === "/logout" ? "bg-gray-700" : "hover:bg-gray-700"
+                  }`}>
+                    <span className="material-icons text-lg mr-3">logout</span>
+                    <span className="font-medium">Keluar</span>
+                  </div>
+                </Link>
+              </div>
             </li>
           </ul>
         </div>

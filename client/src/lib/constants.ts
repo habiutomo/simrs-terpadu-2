@@ -1,27 +1,32 @@
 // Navigation links for the sidebar
-export const NAV_LINKS = [
-  { href: "/", icon: "dashboard", label: "Dashboard" },
-  { href: "/patients", icon: "people", label: "Pasien" },
-  { 
-    href: "/patients/data",
-    icon: "person_search", 
-    label: "Data Pasien",
-    parent: "patients",
-    isSubmenu: true
-  },
-  { 
-    href: "/patients/riwayat", 
-    icon: "history", 
-    label: "Riwayat Kunjungan",
-    parent: "patients",
-    isSubmenu: true
-  },
-  { href: "/appointments", icon: "event", label: "Jadwal & Appointment" },
-  { href: "/medical-records", icon: "folder", label: "Rekam Medis" },
+// Template user data
+export const USER_DATA = {
+  id: 1,
+  username: "admin",
+  name: "Administrator",
+  role: "Administrator",
+  facilityName: "RSUD Harapan Bunda"
+};
+
+export interface NavLink {
+  href: string;
+  icon: string;
+  label: string;
+  parent?: string;
+  isSubmenu?: boolean;
+}
+
+export const NAV_LINKS: NavLink[] = [
+  { href: "/", icon: "home", label: "Dashboard" },
+  { href: "/patients", icon: "person", label: "Pasien" },
+  { href: "/appointments", icon: "calendar_month", label: "Jadwal & Appointment" },
+  { href: "/medical-records", icon: "description", label: "Rekam Medis" },
+  { href: "/inpatient", icon: "hotel", label: "Rawat Jalan" },
   { href: "/pharmacy", icon: "medication", label: "Farmasi" },
-  { href: "/billing", icon: "receipt", label: "Billing" },
+  { href: "/laboratory", icon: "science", label: "Laboratorium" },
+  { href: "/radiology", icon: "radioactive", label: "Radiologi" },
   { href: "/reports", icon: "bar_chart", label: "Laporan" },
-  { href: "/satu-sehat", icon: "cloud_sync", label: "Satu Sehat" },
+  { href: "/settings", icon: "settings", label: "Pengaturan" },
 ];
 
 // Quick access shortcuts for the dashboard
@@ -51,7 +56,7 @@ export const SATU_SEHAT_STATUS = [
 ];
 
 // Dummy user for demo
-export const CURRENT_USER = {
+export const DOCTOR_USER = {
   id: 1,
   name: "Dr. Rahmat",
   role: "Dokter Umum",
