@@ -1,54 +1,21 @@
 import React from "react";
-import { Input } from "@/components/ui/input";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Bell, Menu, Search, Settings } from "lucide-react";
 
 interface HeaderProps {
   pageTitle: string;
   toggleSidebar: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ pageTitle, toggleSidebar }) => {
+const Header = ({ pageTitle, toggleSidebar }: HeaderProps) => {
   return (
-    <header className="bg-white shadow-sm z-10">
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="mr-4 text-neutral-500 md:hidden"
-            onClick={toggleSidebar}
-          >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle sidebar</span>
+    <header className="border-b bg-white p-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" onClick={toggleSidebar} className="lg:hidden">
+            <Menu size={24} />
           </Button>
-          <div>
-            <h2 className="text-xl font-bold text-neutral-700">{pageTitle}</h2>
-            <p className="text-sm text-neutral-500">Selamat datang kembali</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
-            <Input 
-              type="text" 
-              placeholder="Cari..." 
-              className="pl-10 pr-4 py-2 rounded-md border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-          <div className="relative">
-            <Button variant="ghost" size="icon" className="text-neutral-500 hover:bg-neutral-100 rounded-full relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              <span className="sr-only">Notifications</span>
-            </Button>
-          </div>
-          <div>
-            <Button variant="ghost" size="icon" className="text-neutral-500 hover:bg-neutral-100 rounded-full">
-              <Settings className="h-5 w-5" />
-              <span className="sr-only">Settings</span>
-            </Button>
-          </div>
+          <h1 className="text-xl font-semibold capitalize">{pageTitle}</h1>
         </div>
       </div>
     </header>
